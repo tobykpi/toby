@@ -695,6 +695,29 @@
       position: relative;
     }
 
+    .vsl-feature-card {
+      display: block;
+      text-align: center;
+      padding: 38px 42px 42px;
+    }
+
+    .vsl-feature-header {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 24px;
+    }
+
+    .vsl-feature-header .eyebrow {
+      margin-bottom: 12px;
+    }
+
+    .vsl-feature-header h3 {
+      font-size: 38px;
+      line-height: 1.08;
+      font-weight: 800;
+      color: #fff;
+    }
+
     .featured-video-card::before {
       content: "";
       position: absolute;
@@ -718,6 +741,20 @@
       max-height: 720px;
       border: none;
       display: block;
+    }
+
+    .featured-video-embed.landscape iframe {
+      aspect-ratio: 16 / 9;
+    }
+
+    .vsl-feature-card .featured-video-embed {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .vsl-feature-card .featured-video-actions {
+      justify-content: center;
+      margin-top: 24px;
     }
 
     .featured-video-copy {
@@ -801,7 +838,7 @@
 
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 28px;
       margin-top: 10px;
     }
@@ -1342,8 +1379,23 @@
           <div class="eyebrow">Edited By Me</div>
           <h2>Videos</h2>
           <p>
-            This section highlights work I edited, with a featured comparison showing how raw footage can be transformed into a polished final production. From pacing and cuts to structure and presentation, editing is a major part of how I help content hit harder.
+            This section opens with a VSL that explains the work I do, followed by editing examples that show how I improve content through pacing, structure, presentation, and final production quality.
           </p>
+        </div>
+
+        <div class="featured-video-card vsl-feature-card">
+          <div class="vsl-feature-header">
+            <div class="eyebrow" style="color:#c9a227;">VSL</div>
+            <h3>WATCH NOW</h3>
+          </div>
+
+          <div class="featured-video-embed landscape">
+            <iframe src="https://www.youtube.com/embed/F_Ciw-zu3yA" title="VSL explaining TobyKPI services" allowfullscreen></iframe>
+          </div>
+
+          <div class="featured-video-actions">
+            <a href="https://www.youtube.com/watch?v=F_Ciw-zu3yA" target="_blank" rel="noopener noreferrer" class="video-action-btn primary">Watch on YouTube</a>
+          </div>
         </div>
 
         <div class="featured-video-card">
