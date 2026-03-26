@@ -698,24 +698,27 @@
     .vsl-feature-card {
       display: block;
       text-align: center;
-      padding: 38px 42px 42px;
+      padding: 0 0 28px;
+      background: transparent;
+      box-shadow: none;
+      overflow: visible;
     }
 
     .vsl-feature-header {
       position: relative;
       z-index: 1;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
-    .vsl-feature-header .eyebrow {
-      margin-bottom: 12px;
+    .vsl-feature-card::before {
+      display: none;
     }
 
     .vsl-feature-header h3 {
       font-size: 38px;
       line-height: 1.08;
       font-weight: 800;
-      color: #fff;
+      color: #111;
     }
 
     .featured-video-card::before {
@@ -1385,7 +1388,6 @@
 
         <div class="featured-video-card vsl-feature-card">
           <div class="vsl-feature-header">
-            <div class="eyebrow" style="color:#c9a227;">VSL</div>
             <h3>WATCH NOW</h3>
           </div>
 
