@@ -65,6 +65,33 @@
       letter-spacing: 2px;
     }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .nav-contact {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      color: #ffffff;
+      white-space: nowrap;
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-contact:hover {
+      background: rgba(255,255,255,0.14);
+      color: #ffffff;
+    }
+
     .brand {
       letter-spacing: 3px;
       font-size: 12px;
@@ -1009,10 +1036,20 @@
         background: rgba(0,0,0,0.92);
       }
 
+      .nav-right {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+      }
+
       nav ul {
         gap: 15px;
         flex-wrap: wrap;
         justify-content: center;
+      }
+
+      .nav-contact {
+        width: 100%;
       }
 
       .hero {
@@ -1062,6 +1099,7 @@
       .featured-video-copy h3 {
         font-size: 30px;
       }
+
     }
 
     @media (max-width: 600px) {
@@ -1105,13 +1143,15 @@
 
   <nav>
     <div class="brand">TOBYKPI</div>
-    <ul>
-      <li><a href="#home">HOME</a></li>
-      <li><a href="#about">ABOUT</a></li>
-      <li><a href="#results">RESULTS</a></li>
-      <li><a href="#videos">VIDEOS</a></li>
-      <li><a href="#websites">WEBSITES</a></li>
-    </ul>
+    <div class="nav-right">
+      <ul>
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#results">RESULTS</a></li>
+        <li><a href="#videos">VIDEOS</a></li>
+        <li><a href="#websites">WEBSITES</a></li>
+      </ul>
+      <a href="mailto:work@tobykpi.com" class="nav-contact">work@tobykpi.com</a>
+    </div>
   </nav>
 
   <section class="hero" id="home">
@@ -1169,18 +1209,6 @@
   </section>
 
   <div class="content-wrapper">
-
-    <section class="section" id="about">
-      <div class="text-block">
-        <div class="eyebrow">About Me</div>
-        <h2>I build attention, reach, and digital growth.</h2>
-        <p>I am a creative professional focused on building clean, modern, and impactful digital experiences. My work blends strategy, content, design, editing, and execution to create real online momentum.</p>
-        <p>I help brands and businesses grow their digital presence by turning content into reach, engagement, and measurable results. From websites and video editing to social media growth, my focus is simple: scale attention and turn it into opportunity.</p>
-      </div>
-      <div class="text-block">
-        <img src="IMG_9796.jpg" alt="TobyKPI" class="about-image">
-      </div>
-    </section>
 
     <section class="results-section" id="results">
       <div class="results-wrap">
@@ -1381,9 +1409,6 @@
         <div class="videos-header">
           <div class="eyebrow">Edited By Me</div>
           <h2>Videos</h2>
-          <p>
-            This section opens with a VSL that explains the work I do, followed by editing examples that show how I improve content through pacing, structure, presentation, and final production quality.
-          </p>
         </div>
 
         <div class="featured-video-card vsl-feature-card">
