@@ -2255,7 +2255,7 @@
     .hero {
       position: relative;
       min-height: 100vh;
-      padding: 140px 50px 72px;
+      padding: 118px 50px 42px;
       background:
         radial-gradient(circle at 18% 24%, rgba(68,227,141,0.12), transparent 24%),
         radial-gradient(circle at 78% 18%, rgba(201,162,39,0.14), transparent 22%),
@@ -2298,9 +2298,9 @@
       max-width: 1300px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: minmax(420px, 0.95fr) minmax(420px, 0.85fr);
+      grid-template-columns: minmax(360px, 0.78fr) minmax(480px, 1fr);
       align-items: center;
-      gap: 70px;
+      gap: 46px;
     }
 
     .hero-visual {
@@ -2339,8 +2339,8 @@
       position: relative;
       isolation: isolate;
       width: 100%;
-      max-width: 720px;
-      padding: 14px;
+      max-width: 470px;
+      padding: 12px;
       border-radius: 36px;
       background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
       border: 1px solid rgba(255,255,255,0.10);
@@ -2382,7 +2382,7 @@
     .hero-copy {
       position: relative;
       text-align: right;
-      max-width: 560px;
+      max-width: 540px;
       margin-left: auto;
       animation: fadeUp 1s ease-out forwards;
       z-index: 1;
@@ -2457,45 +2457,224 @@
     }
 
     .hero-description {
-      margin-top: 26px;
-      font-size: 16px;
-      line-height: 1.95;
+      margin-top: 18px;
+      font-size: 15px;
+      line-height: 1.78;
       color: rgba(255,255,255,0.76);
       max-width: none;
     }
 
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: flex-end;
-      margin-top: 28px;
+    .hero-services-panel {
+      --service-card-width: 220px;
+      --service-gap: 12px;
+      --service-sequence-size: calc((var(--service-card-width) * 4) + (var(--service-gap) * 4));
+      position: relative;
+      z-index: 1;
+      width: min(100%, 1300px);
+      margin: 18px auto 0;
+      padding: 14px 16px 16px;
+      border-radius: 30px;
+      background: linear-gradient(145deg, rgba(11,14,20,0.92), rgba(18,18,28,0.72));
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow:
+        0 26px 58px rgba(0,0,0,0.26),
+        0 0 34px rgba(123,63,242,0.12),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      overflow: hidden;
+      backdrop-filter: blur(14px);
     }
 
-    .hero-tag {
-      display: inline-flex;
+    .hero-services-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 88px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 88px);
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
+    .hero-services-panel::after {
+      content: "";
+      position: absolute;
+      top: -12%;
+      bottom: -12%;
+      left: -26%;
+      width: 140px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+      opacity: 0.34;
+      transform: skewX(-24deg);
+      animation: heroServicesSweep 8s linear infinite;
+      pointer-events: none;
+    }
+
+    .hero-services-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
       align-items: center;
-      width: auto;
-      padding: 11px 15px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.12);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.4px;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-family: 'Montserrat Alternates', sans-serif;
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 5px;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.92);
-      backdrop-filter: blur(10px);
+      color: #d8fbff;
+      text-shadow:
+        0 0 18px rgba(141,230,255,0.34),
+        0 0 34px rgba(141,230,255,0.22),
+        0 0 54px rgba(123,63,242,0.18);
+    }
+
+    .hero-services-head::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(68,227,141,0), rgba(68,227,141,0.92));
+      box-shadow: 0 0 12px rgba(68,227,141,0.36);
+    }
+
+    .hero-services-marquee {
+      position: relative;
+      z-index: 1;
+      padding-top: 4px;
+      overflow: hidden;
+      mask-image: linear-gradient(90deg, transparent, rgba(0,0,0,1) 10%, rgba(0,0,0,1) 90%, transparent);
+    }
+
+    .hero-services-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      width: max-content;
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+    }
+
+    .hero-services-row-top {
+      animation: heroServicesMarquee 17s linear infinite;
+    }
+
+    .hero-services-panel:hover::after,
+    .hero-services-panel:focus-within::after,
+    .hero-services-panel:hover .hero-services-row,
+    .hero-services-panel:focus-within .hero-services-row {
+      animation-play-state: paused;
+    }
+
+    .hero-services-sequence {
+      display: flex;
+      gap: var(--service-gap);
+      flex-shrink: 0;
+      padding-right: var(--service-gap);
+    }
+
+    .hero-service-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: var(--service-card-width);
+      flex: 0 0 var(--service-card-width);
+      min-height: 76px;
+      padding: 13px 16px 15px;
+      border-radius: 22px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.12);
       box-shadow:
-        0 12px 26px rgba(0,0,0,0.16),
-        0 0 18px rgba(123,63,242,0.08);
+        0 16px 28px rgba(0,0,0,0.18),
+        inset 0 1px 0 rgba(255,255,255,0.05);
+      overflow: hidden;
+      transform: translateZ(0);
+      text-decoration: none;
+      transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+      cursor: pointer;
+    }
+
+    .hero-service-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 18px;
+      right: 18px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--service-accent), transparent);
+      opacity: 0.95;
+    }
+
+    .hero-service-card::after {
+      content: "";
+      position: absolute;
+      top: -18px;
+      right: -18px;
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--service-aura), transparent 72%);
+      filter: blur(6px);
+      opacity: 0.95;
+      pointer-events: none;
+    }
+
+    .hero-service-card:hover,
+    .hero-service-card:focus-visible {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,0.18);
+      box-shadow:
+        0 20px 34px rgba(0,0,0,0.22),
+        0 0 26px var(--service-aura),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+      outline: none;
+    }
+
+    .hero-service-number {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.54);
+    }
+
+    .hero-service-name {
+      display: block;
+      font-size: 16px;
+      line-height: 1.15;
+      font-weight: 800;
+      color: #ffffff;
+      text-shadow: 0 0 16px rgba(255,255,255,0.08);
+    }
+
+    .hero-service-card.service-growth {
+      --service-accent: rgba(68,227,141,0.95);
+      --service-aura: rgba(68,227,141,0.28);
+    }
+
+    .hero-service-card.service-editing {
+      --service-accent: rgba(201,162,39,0.95);
+      --service-aura: rgba(201,162,39,0.26);
+    }
+
+    .hero-service-card.service-websites {
+      --service-accent: rgba(123,63,242,0.95);
+      --service-aura: rgba(123,63,242,0.28);
+    }
+
+    .hero-service-card.service-mixing {
+      --service-accent: rgba(141,230,255,0.95);
+      --service-aura: rgba(141,230,255,0.26);
     }
 
     .hero-actions {
       display: flex;
       justify-content: flex-end;
       gap: 14px;
-      margin-top: 34px;
+      margin-top: 22px;
       flex-wrap: wrap;
     }
 
@@ -2551,17 +2730,17 @@
 
     .hero-stats {
       max-width: 1300px;
-      margin: 36px auto 0;
+      margin: 24px auto 0;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
+      gap: 14px;
       position: static;
       z-index: auto;
     }
 
     .hero-stat {
       position: relative;
-      padding: 20px 22px;
+      padding: 16px 18px;
       border-radius: 22px;
       background: linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.04));
       border: 1px solid rgba(255,255,255,0.12);
@@ -2612,7 +2791,7 @@
 
     .hero-stat-value {
       display: block;
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 800;
       margin-bottom: 8px;
       color: #ffffff;
@@ -2620,8 +2799,8 @@
     }
 
     .hero-stat-label {
-      font-size: 11px;
-      letter-spacing: 1.6px;
+      font-size: 10px;
+      letter-spacing: 1.3px;
       text-transform: uppercase;
       color: rgba(255,255,255,0.66);
       font-weight: 700;
@@ -2648,10 +2827,30 @@
       }
     }
 
+    @keyframes heroServicesSweep {
+      from {
+        transform: translate3d(0, 0, 0) skewX(-24deg);
+      }
+      to {
+        transform: translate3d(620px, 0, 0) skewX(-24deg);
+      }
+    }
+
+    @keyframes heroServicesMarquee {
+      from {
+        transform: translate3d(0, 0, 0);
+      }
+      to {
+        transform: translate3d(calc(-1 * var(--service-sequence-size)), 0, 0);
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .hero::after,
       .hero-visual::before,
-      .hero-image-frame {
+      .hero-image-frame,
+      .hero-services-panel::after,
+      .hero-services-row {
         animation: none;
       }
     }
@@ -2675,7 +2874,16 @@
         margin-right: auto;
       }
 
-      .hero-tags,
+      .hero-services-panel,
+      .hero-actions {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-services-head {
+        justify-content: center;
+      }
+
       .hero-actions {
         justify-content: center;
       }
@@ -2698,9 +2906,42 @@
       .name {
         font-size: 54px;
       }
+
+      .hero-services-panel {
+        --service-card-width: 182px;
+      }
+
+      .hero-service-name {
+        font-size: 16px;
+      }
     }
 
     @media (max-width: 600px) {
+      .hero-services-panel {
+        --service-card-width: 156px;
+        --service-gap: 10px;
+        padding: 16px 14px 18px;
+      }
+
+      .hero-services-head {
+        font-size: 16px;
+        letter-spacing: 3px;
+      }
+
+      .hero-service-card {
+        min-height: 82px;
+        padding: 14px 14px 16px;
+      }
+
+      .hero-service-number {
+        margin-bottom: 10px;
+        font-size: 9px;
+      }
+
+      .hero-service-name {
+        font-size: 14px;
+      }
+
       .hero-stats {
         grid-template-columns: 1fr;
       }
@@ -2714,10 +2955,11 @@
     <div class="brand">TOBYKPI</div>
     <div class="nav-right">
       <ul>
-        <li><a href="#home">HOME</a></li>
-        <li><a href="#results">RESULTS</a></li>
-        <li><a href="#videos">VIDEOS</a></li>
-        <li><a href="#websites">WEBSITES</a></li>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="results.html">RESULTS</a></li>
+        <li><a href="videos.html">VIDEOS</a></li>
+        <li><a href="websites.html">WEBSITES</a></li>
+        <li><a href="music-mixing.html">MUSIC</a></li>
       </ul>
       <a href="mailto:work@tobykpi.com" class="nav-contact">work@tobykpi.com</a>
     </div>
@@ -2738,21 +2980,77 @@
         <div class="hero-kpi">Key Performance Indicator</div>
 
         <p class="hero-description">
-          I help brands, creators, and online businesses scale through social media growth, content strategy, web design, and performance-focused execution. My portfolio is built around creating attention that turns into measurable results.
+          I help brands, creators, and online businesses scale through social media growth, video editing, website building, music mixing, and performance-focused execution. My portfolio is built around creating attention that turns into measurable results.
         </p>
 
-        <div class="hero-tags">
-          <span class="hero-tag">Social Media Growth</span>
-          <span class="hero-tag">Content Strategy</span>
-          <span class="hero-tag">Brand Positioning</span>
-          <span class="hero-tag">Web Design</span>
-          <span class="hero-tag">Video Editing</span>
-          <span class="hero-tag">Performance Marketing</span>
-        </div>
-
         <div class="hero-actions">
-          <a href="#results" class="hero-button primary">See Results</a>
-          <a href="#videos" class="hero-button secondary">View Videos</a>
+          <a href="results.html" class="hero-button primary">See Results</a>
+          <a href="videos.html" class="hero-button secondary">View Videos</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-services-panel" aria-label="Services">
+      <div class="hero-services-head">Choose A Service</div>
+
+      <div class="hero-services-marquee">
+        <div class="hero-services-row hero-services-row-top">
+          <div class="hero-services-sequence">
+            <a class="hero-service-card service-growth" href="results.html">
+              <span class="hero-service-number">01</span>
+              <strong class="hero-service-name">Social Media Growth</strong>
+            </a>
+            <a class="hero-service-card service-editing" href="videos.html">
+              <span class="hero-service-number">02</span>
+              <strong class="hero-service-name">Video Editing</strong>
+            </a>
+            <a class="hero-service-card service-websites" href="websites.html">
+              <span class="hero-service-number">03</span>
+              <strong class="hero-service-name">Website Building</strong>
+            </a>
+            <a class="hero-service-card service-mixing" href="music-mixing.html">
+              <span class="hero-service-number">04</span>
+              <strong class="hero-service-name">Music Mixing</strong>
+            </a>
+          </div>
+
+          <div class="hero-services-sequence" aria-hidden="true">
+            <a class="hero-service-card service-growth" href="results.html" tabindex="-1">
+              <span class="hero-service-number">01</span>
+              <strong class="hero-service-name">Social Media Growth</strong>
+            </a>
+            <a class="hero-service-card service-editing" href="videos.html" tabindex="-1">
+              <span class="hero-service-number">02</span>
+              <strong class="hero-service-name">Video Editing</strong>
+            </a>
+            <a class="hero-service-card service-websites" href="websites.html" tabindex="-1">
+              <span class="hero-service-number">03</span>
+              <strong class="hero-service-name">Website Building</strong>
+            </a>
+            <a class="hero-service-card service-mixing" href="music-mixing.html" tabindex="-1">
+              <span class="hero-service-number">04</span>
+              <strong class="hero-service-name">Music Mixing</strong>
+            </a>
+          </div>
+
+          <div class="hero-services-sequence" aria-hidden="true">
+            <a class="hero-service-card service-growth" href="results.html" tabindex="-1">
+              <span class="hero-service-number">01</span>
+              <strong class="hero-service-name">Social Media Growth</strong>
+            </a>
+            <a class="hero-service-card service-editing" href="videos.html" tabindex="-1">
+              <span class="hero-service-number">02</span>
+              <strong class="hero-service-name">Video Editing</strong>
+            </a>
+            <a class="hero-service-card service-websites" href="websites.html" tabindex="-1">
+              <span class="hero-service-number">03</span>
+              <strong class="hero-service-name">Website Building</strong>
+            </a>
+            <a class="hero-service-card service-mixing" href="music-mixing.html" tabindex="-1">
+              <span class="hero-service-number">04</span>
+              <strong class="hero-service-name">Music Mixing</strong>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -2760,7 +3058,7 @@
     <div class="hero-stats">
       <div class="hero-stat">
         <span class="hero-stat-value">33.9M+</span>
-        <span class="hero-stat-label">Views generated through organic short-form content</span>
+        <span class="hero-stat-label">Views generated through organic short-form content per month</span>
       </div>
       <div class="hero-stat">
         <span class="hero-stat-value">17.8M+</span>
@@ -2778,542 +3076,12 @@
   </section>
 
   <div class="content-wrapper">
-
-    <section class="results-section" id="results">
-      <div class="results-wrap">
-        <div class="results-header">
-          <div>
-            <div class="eyebrow">Growth Results</div>
-            <h2>Instagram scaling results<br>that speak for themselves.</h2>
-            <p>
-              I helped scale an Instagram page through content strategy, audience-focused execution, and high-shareability creative. One of my recent projects is <strong>@cuhvo</strong>, a page I started working on in <strong>November</strong> with a focus on reach, growth, retention, and viral distribution.
-            </p>
-          </div>
-          <div class="results-badge">Case Study • Last 30 Days</div>
-        </div>
-
-        <div class="project-link-card">
-          <div class="project-copy">
-            <h3>Recent Project: @cuhvo</h3>
-            <p>
-              This is one of my recent projects I’ve been working on. Since starting in <strong>November</strong>, I’ve focused on content strategy, audience growth, and scaling reach through highly shareable reels, consistent execution, and content designed to attract new viewers.
-            </p>
-          </div>
-          <a class="project-button" href="https://instagram.com/cuhvo" target="_blank" rel="noopener noreferrer">View Page</a>
-        </div>
-
-        <div class="proof-grid">
-          <div class="proof-card proof-card-main">
-            <div class="proof-card-header">
-              <h3>Most important performance proof</h3>
-              <p>
-                This screenshot shows the biggest headline metric from the page: total views, non-follower discovery, and accounts reached. It gives immediate proof of large-scale exposure and growth beyond the existing audience.
-              </p>
-            </div>
-            <div class="proof-image-wrap">
-              <img src="TobyKPI stats 5.jpg" alt="Instagram views and accounts reached screenshot">
-            </div>
-          </div>
-
-          <div class="proof-stack">
-            <div class="proof-card proof-card-secondary">
-              <div class="proof-card-header">
-                <h3>Interaction growth</h3>
-                <p>Massive interaction volume generated from reels-driven content.</p>
-              </div>
-              <div class="proof-image-wrap">
-                <img src="TobyKPI stats 1.jpg" alt="Instagram interactions screenshot">
-              </div>
-            </div>
-
-            <div class="proof-card proof-card-tertiary">
-              <div class="proof-card-header">
-                <h3>Top content proof</h3>
-                <p>Top-performing reels showing multi-million view content outputs.</p>
-              </div>
-              <div class="proof-image-wrap">
-                <img src="TobyKPI stats 4.jpg" alt="Instagram top content screenshot">
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="videos-section" id="videos">
-      <div class="videos-wrap">
-        <div class="videos-header">
-          <div class="eyebrow">Edited By Me</div>
-          <h2>Videos</h2>
-        </div>
-
-        <div class="featured-video-card vsl-feature-card">
-          <div class="vsl-feature-header">
-            <h3>WATCH NOW</h3>
-          </div>
-
-          <div class="featured-video-embed landscape">
-            <iframe src="https://www.youtube.com/embed/F_Ciw-zu3yA" title="VSL explaining TobyKPI services" allowfullscreen></iframe>
-          </div>
-
-          <div class="featured-video-actions">
-            <a href="https://www.youtube.com/watch?v=F_Ciw-zu3yA" target="_blank" rel="noopener noreferrer" class="video-action-btn primary">Watch on YouTube</a>
-          </div>
-        </div>
-
-        <div class="featured-video-card">
-          <div class="featured-video-embed">
-            <iframe src="https://www.youtube.com/embed/JgDcndYlosk" title="Rough draft vs final production comparison" allowfullscreen></iframe>
-          </div>
-
-          <div class="featured-video-copy">
-            <div class="eyebrow" style="color:#c9a227;">Featured Edit</div>
-            <h3>From rough draft footage to final production.</h3>
-            <p>
-              This featured video gives a direct look at my editing process by showing the difference between the original draft and the finished version. It highlights how I shape raw content into something cleaner, stronger, and more engaging through editing choices that improve flow, clarity, and impact.
-            </p>
-            <p>
-              I edited this to showcase how production value can change the way content feels — not just visually, but emotionally and strategically too.
-            </p>
-
-            <div class="video-pill-row">
-              <span class="video-pill">Video Editing</span>
-              <span class="video-pill">Before & After</span>
-              <span class="video-pill">Creative Direction</span>
-              <span class="video-pill">Final Production</span>
-            </div>
-
-            <div class="featured-video-actions">
-              <a href="https://www.youtube.com/shorts/JgDcndYlosk?feature=share" target="_blank" rel="noopener noreferrer" class="video-action-btn primary">Watch on YouTube</a>
-              <a href="#websites" class="video-action-btn secondary">See More Work</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-carousel-section">
-          <div class="video-carousel-header">
-            <div class="eyebrow">Edited Shorts</div>
-          </div>
-
-          <div class="video-carousel-shell" data-video-carousel>
-            <button class="video-carousel-btn prev" type="button" aria-label="Previous video" data-carousel-prev>&lsaquo;</button>
-            <button class="video-carousel-btn next" type="button" aria-label="Next video" data-carousel-next>&rsaquo;</button>
-
-            <div class="video-carousel-stage" data-carousel-stage>
-              <div class="video-card" data-carousel-card>
-                <iframe src="https://www.youtube.com/embed/8AmfpP6Lyi0" allowfullscreen title="Edited video project 05"></iframe>
-              </div>
-
-              <div class="video-card" data-carousel-card>
-                <iframe src="https://www.youtube.com/embed/E06iUGbZ2wA" allowfullscreen title="Edited video project 06"></iframe>
-              </div>
-
-              <div class="video-card" data-carousel-card>
-                <iframe src="https://www.youtube.com/embed/Gyx5C-_2Q6g" allowfullscreen title="Edited video project 04"></iframe>
-              </div>
-
-              <div class="video-card" data-carousel-card>
-                <iframe src="https://www.youtube.com/embed/0eSTY6EWA8Q" allowfullscreen title="Edited video project 03"></iframe>
-              </div>
-
-              <div class="video-card" data-carousel-card>
-                <iframe src="https://www.youtube.com/embed/yXpyuzl4BVs" allowfullscreen title="Edited video project 01"></iframe>
-              </div>
-
-              <div class="video-card" data-carousel-card>
-                <iframe src="https://www.youtube.com/embed/M8N_66dE4uc" allowfullscreen title="Edited video project 02"></iframe>
-              </div>
-            </div>
-
-            <div class="video-carousel-dots" data-carousel-dots></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="websites">
-      <div class="text-block" style="grid-column: 1 / -1;">
-        <div class="eyebrow" style="display:block; text-align:center;">Web Design</div>
-        <h2 style="text-align:center;">Websites I've Built</h2>
-        <div class="video-carousel-section website-carousel-section">
-          <div class="video-carousel-shell website-carousel-shell" data-website-carousel>
-            <button class="video-carousel-btn prev" type="button" aria-label="Previous website" data-carousel-prev>&lsaquo;</button>
-            <button class="video-carousel-btn next" type="button" aria-label="Next website" data-carousel-next>&rsaquo;</button>
-
-            <div class="website-carousel-stage" data-carousel-stage>
-              <div class="website-card" data-carousel-card>
-                <div class="website-card-shell">
-                  <div class="website-browser-bar">
-                    <div class="website-browser-dots">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    <div class="website-browser-url">fearapparel.shop</div>
-                  </div>
-                  <div class="website-preview-shell">
-                    <iframe src="https://fearapparel.shop" title="Fear Apparel live website preview" loading="lazy" scrolling="no"></iframe>
-                  </div>
-                  <div class="website-card-meta">
-                    <div class="website-card-copy">
-                      <h3>Fear Apparel</h3>
-                      <p>An ecommerce apparel website built to showcase products with a stronger brand presentation, a cleaner storefront experience, and a more polished online shopping presence.</p>
-                    </div>
-                    <div class="website-card-cta">Visit Website</div>
-                  </div>
-                </div>
-                <a href="https://fearapparel.shop" target="_blank" rel="noopener noreferrer" class="website-card-link" aria-label="Visit Fear Apparel website"></a>
-              </div>
-
-              <div class="website-card" data-carousel-card>
-                <div class="website-card-shell">
-                  <div class="website-browser-bar">
-                    <div class="website-browser-dots">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    <div class="website-browser-url">drjoeevans.com</div>
-                  </div>
-                  <div class="website-preview-shell">
-                    <iframe src="https://drjoeevans.com" title="Dr. Joe Evans live website preview" loading="lazy" scrolling="no"></iframe>
-                  </div>
-                  <div class="website-card-meta">
-                    <div class="website-card-copy">
-                      <h3>Dr. Joe Evans</h3>
-                      <p>A professional personal brand website with strong visual structure, clean messaging, and a polished user experience built to support authority and visibility.</p>
-                    </div>
-                    <div class="website-card-cta">Visit Website</div>
-                  </div>
-                </div>
-                <a href="https://drjoeevans.com" target="_blank" rel="noopener noreferrer" class="website-card-link" aria-label="Visit Dr. Joe Evans website"></a>
-              </div>
-
-              <div class="website-card" data-carousel-card>
-                <div class="website-card-shell">
-                  <div class="website-browser-bar">
-                    <div class="website-browser-dots">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    <div class="website-browser-url">quickliftmoving.us</div>
-                  </div>
-                  <div class="website-preview-shell">
-                    <iframe src="https://quickliftmoving.us" title="Quick Lift Moving live website preview" loading="lazy" scrolling="no"></iframe>
-                  </div>
-                  <div class="website-card-meta">
-                    <div class="website-card-copy">
-                      <h3>Quick Lift Moving</h3>
-                      <p>A polished lead-generation website built around a free estimate request flow, clear service messaging, and a stronger online presence for a moving company brand.</p>
-                    </div>
-                    <div class="website-card-cta">Visit Website</div>
-                  </div>
-                </div>
-                <a href="https://quickliftmoving.us" target="_blank" rel="noopener noreferrer" class="website-card-link" aria-label="Visit Quick Lift Moving website"></a>
-              </div>
-
-              <div class="website-card" data-carousel-card>
-                <div class="website-card-shell">
-                  <div class="website-browser-bar">
-                    <div class="website-browser-dots">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    <div class="website-browser-url">breathoflife.world</div>
-                  </div>
-                  <div class="website-preview-shell">
-                    <iframe src="https://breathoflife.world" title="Breath of Life Ministries live website preview" loading="lazy" scrolling="no"></iframe>
-                  </div>
-                  <div class="website-card-meta">
-                    <div class="website-card-copy">
-                      <h3>Breath of Life Ministries</h3>
-                      <p>A modern, responsive website designed and developed to strengthen online presence, improve presentation, and support community engagement.</p>
-                    </div>
-                    <div class="website-card-cta">Visit Website</div>
-                  </div>
-                </div>
-                <a href="https://breathoflife.world" target="_blank" rel="noopener noreferrer" class="website-card-link" aria-label="Visit Breath of Life Ministries website"></a>
-              </div>
-            </div>
-
-            <div class="video-carousel-dots" data-carousel-dots></div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
     <footer>
       <p style="letter-spacing: 3px; font-size: 14px;">TOBYKPI PORTFOLIO</p>
       <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;">&copy; 2026 TobyKPI. All Rights Reserved.</p>
     </footer>
-
   </div>
-
-  <script>
-    (() => {
-      const initStackCarousel = (root, settings) => {
-        if (!root) return;
-
-        const stage = root.querySelector("[data-carousel-stage]");
-        const cards = Array.from(root.querySelectorAll("[data-carousel-card]"));
-        const dotsWrap = root.querySelector("[data-carousel-dots]");
-        const nextBtn = root.querySelector("[data-carousel-next]");
-        const prevBtn = root.querySelector("[data-carousel-prev]");
-        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-        if (!stage || !dotsWrap || cards.length === 0) return;
-
-        let activeIndex = 0;
-        let autoTimer = null;
-        let isInViewport = false;
-
-        const dots = cards.map((_, index) => {
-          const dot = document.createElement("button");
-          dot.type = "button";
-          dot.className = "video-carousel-dot";
-          dot.setAttribute("aria-label", `Go to item ${index + 1}`);
-          dot.addEventListener("click", () => goTo(index, true));
-          dotsWrap.appendChild(dot);
-          return dot;
-        });
-
-        const sync = () => {
-          const stageWidth = stage.clientWidth;
-          const profile = window.innerWidth <= settings.mobileBreakpoint ? settings.mobile : settings.desktop;
-          const cardWidth = Math.min(Math.max(stageWidth * profile.cardWidthFactor, profile.cardWidthMin), profile.cardWidthMax);
-          const nearShift = Math.max(stageWidth * profile.nearShiftFactor, profile.nearShiftMin);
-          const farShift = Math.max(stageWidth * profile.farShiftFactor, profile.farShiftMin);
-
-          cards.forEach((card, index) => {
-            let diff = index - activeIndex;
-
-            if (diff > cards.length / 2) diff -= cards.length;
-            if (diff < -cards.length / 2) diff += cards.length;
-
-            const abs = Math.abs(diff);
-            let x = 0;
-            let y = 0;
-            let scale = 1;
-            let rotate = 0;
-            let opacity = 1;
-            let blur = 0;
-            let saturate = 1;
-
-            if (abs === 1) {
-              x = diff * nearShift;
-              y = profile.nearDrop;
-              scale = profile.nearScale;
-              rotate = diff * profile.nearRotate;
-              opacity = profile.nearOpacity;
-              blur = profile.nearBlur;
-              saturate = profile.nearSaturate;
-            } else if (abs >= 2) {
-              x = diff * farShift;
-              y = profile.farDrop;
-              scale = profile.farScale;
-              rotate = diff * profile.farRotate;
-              opacity = profile.farOpacity;
-              blur = profile.farBlur;
-              saturate = profile.farSaturate;
-            }
-
-            const filterValue = blur > 0.01 || Math.abs(saturate - 1) > 0.01
-              ? `blur(${blur}px) saturate(${saturate})`
-              : "none";
-
-            card.style.width = `${cardWidth}px`;
-            card.style.transform = `translateX(calc(-50% + ${x}px)) translateY(${y}px) translateZ(0) scale(${scale}) rotate(${rotate}deg)`;
-            card.style.opacity = opacity;
-            card.style.zIndex = String(20 - abs);
-            card.style.filter = filterValue;
-            card.style.pointerEvents = abs === 0 ? "auto" : "none";
-            card.dataset.state = abs === 0 ? "active" : abs === 1 ? "near" : "far";
-            card.setAttribute("aria-hidden", abs === 0 ? "false" : "true");
-          });
-
-          dots.forEach((dot, index) => {
-            const isActive = index === activeIndex;
-            dot.classList.toggle("active", isActive);
-            dot.setAttribute("aria-pressed", isActive ? "true" : "false");
-          });
-        };
-
-        const stop = () => {
-          if (autoTimer) {
-            window.clearInterval(autoTimer);
-            autoTimer = null;
-          }
-        };
-
-        const start = () => {
-          stop();
-          if (reducedMotion.matches || !isInViewport) return;
-          autoTimer = window.setInterval(() => goTo(activeIndex + 1), settings.interval);
-        };
-
-        const restart = () => {
-          start();
-        };
-
-        const goTo = (index, userInitiated = false) => {
-          activeIndex = (index + cards.length) % cards.length;
-          sync();
-          if (userInitiated) restart();
-        };
-
-        nextBtn?.addEventListener("click", () => goTo(activeIndex + 1, true));
-        prevBtn?.addEventListener("click", () => goTo(activeIndex - 1, true));
-
-        root.addEventListener("mouseenter", stop);
-        root.addEventListener("mouseleave", start);
-        root.addEventListener("focusin", stop);
-        root.addEventListener("focusout", start);
-        window.addEventListener("resize", sync);
-        document.addEventListener("visibilitychange", () => {
-          if (document.hidden) {
-            stop();
-          } else {
-            start();
-          }
-        });
-
-        if ("IntersectionObserver" in window) {
-          const observer = new IntersectionObserver((entries) => {
-            const entry = entries[0];
-            if (!entry) return;
-
-            isInViewport = entry.isIntersecting;
-
-            if (isInViewport) {
-              activeIndex = 0;
-              sync();
-              start();
-            } else {
-              stop();
-            }
-          }, {
-            threshold: settings.threshold
-          });
-
-          observer.observe(root);
-        } else {
-          isInViewport = true;
-        }
-
-        const handleMotionChange = () => {
-          sync();
-          start();
-        };
-
-        if (typeof reducedMotion.addEventListener === "function") {
-          reducedMotion.addEventListener("change", handleMotionChange);
-        }
-
-        sync();
-        start();
-      };
-
-      initStackCarousel(document.querySelector("[data-video-carousel]"), {
-        interval: 4200,
-        threshold: 0.45,
-        mobileBreakpoint: 900,
-        desktop: {
-          cardWidthFactor: 0.34,
-          cardWidthMin: 270,
-          cardWidthMax: 360,
-          nearShiftFactor: 0.24,
-          nearShiftMin: 170,
-          farShiftFactor: 0.42,
-          farShiftMin: 320,
-          nearDrop: 32,
-          farDrop: 76,
-          nearScale: 0.92,
-          farScale: 0.82,
-          nearRotate: 5,
-          farRotate: 8,
-          nearOpacity: 0.76,
-          farOpacity: 0.38,
-          nearBlur: 0,
-          farBlur: 0,
-          nearSaturate: 1,
-          farSaturate: 1
-        },
-        mobile: {
-          cardWidthFactor: 0.62,
-          cardWidthMin: 270,
-          cardWidthMax: 360,
-          nearShiftFactor: 0.26,
-          nearShiftMin: 150,
-          farShiftFactor: 0.44,
-          farShiftMin: 250,
-          nearDrop: 36,
-          farDrop: 82,
-          nearScale: 0.92,
-          farScale: 0.82,
-          nearRotate: 5,
-          farRotate: 8,
-          nearOpacity: 0.76,
-          farOpacity: 0.38,
-          nearBlur: 0,
-          farBlur: 0,
-          nearSaturate: 1,
-          farSaturate: 1
-        }
-      });
-
-      initStackCarousel(document.querySelector("[data-website-carousel]"), {
-        interval: 4600,
-        threshold: 0.4,
-        mobileBreakpoint: 900,
-        desktop: {
-          cardWidthFactor: 0.52,
-          cardWidthMin: 360,
-          cardWidthMax: 560,
-          nearShiftFactor: 0.22,
-          nearShiftMin: 200,
-          farShiftFactor: 0.38,
-          farShiftMin: 360,
-          nearDrop: 24,
-          farDrop: 62,
-          nearScale: 0.91,
-          farScale: 0.81,
-          nearRotate: 3,
-          farRotate: 6,
-          nearOpacity: 0.78,
-          farOpacity: 0.38,
-          nearBlur: 0,
-          farBlur: 0,
-          nearSaturate: 1,
-          farSaturate: 1
-        },
-        mobile: {
-          cardWidthFactor: 0.86,
-          cardWidthMin: 280,
-          cardWidthMax: 500,
-          nearShiftFactor: 0.16,
-          nearShiftMin: 90,
-          farShiftFactor: 0.28,
-          farShiftMin: 170,
-          nearDrop: 22,
-          farDrop: 52,
-          nearScale: 0.93,
-          farScale: 0.84,
-          nearRotate: 2,
-          farRotate: 5,
-          nearOpacity: 0.8,
-          farOpacity: 0.34,
-          nearBlur: 0,
-          farBlur: 0,
-          nearSaturate: 1,
-          farSaturate: 1
-        }
-      });
-    })();
-
-  </script>
 </body>
 </html>
+
+
