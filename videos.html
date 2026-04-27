@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TobyKPI | Videos</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Montserrat+Alternates:wght@800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .nav-current {
+      color: var(--gold);
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="brand">TOBYKPI</div>
+    <div class="nav-right">
+      <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="results.html">RESULTS</a></li>
+        <li><a href="videos.html" class="nav-current">VIDEOS</a></li>
+        <li><a href="websites.html">WEBSITES</a></li>
+        <li><a href="music-mixing.html">MUSIC</a></li>
+      </ul>
+      <a href="mailto:work@tobykpi.com" class="nav-contact">work@tobykpi.com</a>
+    </div>
+  </nav>
+
+  <div class="content-wrapper">
+    <section class="videos-section" id="videos">
+      <div class="videos-wrap">
+        <div class="videos-header">
+          <div class="eyebrow">Edited By Me</div>
+          <h2>Videos</h2>
+        </div>
+
+        <div class="featured-video-card vsl-feature-card">
+          <div class="vsl-feature-header">
+            <h3>WATCH NOW</h3>
+          </div>
+
+          <div class="featured-video-embed landscape">
+            <iframe src="https://www.youtube.com/embed/F_Ciw-zu3yA" title="VSL explaining TobyKPI services" allowfullscreen></iframe>
+          </div>
+
+          <div class="featured-video-actions">
+            <a href="https://www.youtube.com/watch?v=F_Ciw-zu3yA" target="_blank" rel="noopener noreferrer" class="video-action-btn primary">Watch on YouTube</a>
+          </div>
+        </div>
+
+        <div class="featured-video-card">
+          <div class="featured-video-embed">
+            <iframe src="https://www.youtube.com/embed/JgDcndYlosk" title="Rough draft vs final production comparison" allowfullscreen></iframe>
+          </div>
+
+          <div class="featured-video-copy">
+            <div class="eyebrow" style="color:#c9a227;">Featured Edit</div>
+            <h3>From rough draft footage to final production.</h3>
+            <p>
+              This featured video gives a direct look at my editing process by showing the difference between the original draft and the finished version. It highlights how I shape raw content into something cleaner, stronger, and more engaging through editing choices that improve flow, clarity, and impact.
+            </p>
+            <p>
+              I edited this to showcase how production value can change the way content feels, not just visually, but emotionally and strategically too.
+            </p>
+
+            <div class="video-pill-row">
+              <span class="video-pill">Video Editing</span>
+              <span class="video-pill">Before & After</span>
+              <span class="video-pill">Creative Direction</span>
+              <span class="video-pill">Final Production</span>
+            </div>
+
+            <div class="featured-video-actions">
+              <a href="https://www.youtube.com/shorts/JgDcndYlosk?feature=share" target="_blank" rel="noopener noreferrer" class="video-action-btn primary">Watch on YouTube</a>
+              <a href="websites.html" class="video-action-btn secondary">See More Work</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-carousel-section">
+          <div class="video-carousel-header">
+            <div class="eyebrow">Edited Shorts</div>
+          </div>
+
+          <div class="video-carousel-shell" data-video-carousel>
+            <button class="video-carousel-btn prev" type="button" aria-label="Previous video" data-carousel-prev>&lsaquo;</button>
+            <button class="video-carousel-btn next" type="button" aria-label="Next video" data-carousel-next>&rsaquo;</button>
+
+            <div class="video-carousel-stage" data-carousel-stage>
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/8AmfpP6Lyi0" allowfullscreen title="Edited video project 05"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/E06iUGbZ2wA" allowfullscreen title="Edited video project 06"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/Gyx5C-_2Q6g" allowfullscreen title="Edited video project 04"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/0eSTY6EWA8Q" allowfullscreen title="Edited video project 03"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/yXpyuzl4BVs" allowfullscreen title="Edited video project 01"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/M8N_66dE4uc" allowfullscreen title="Edited video project 02"></iframe>
+              </div>
+            </div>
+
+            <div class="video-carousel-dots" data-carousel-dots></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p style="letter-spacing: 3px; font-size: 14px;">TOBYKPI PORTFOLIO</p>
+      <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;">&copy; 2026 TobyKPI. All Rights Reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      const initStackCarousel = (root, settings) => {
+        if (!root) return;
+
+        const stage = root.querySelector("[data-carousel-stage]");
+        const cards = Array.from(root.querySelectorAll("[data-carousel-card]"));
+        const dotsWrap = root.querySelector("[data-carousel-dots]");
+        const nextBtn = root.querySelector("[data-carousel-next]");
+        const prevBtn = root.querySelector("[data-carousel-prev]");
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        if (!stage || !dotsWrap || cards.length === 0) return;
+
+        let activeIndex = 0;
+        let autoTimer = null;
+        let isInViewport = false;
+
+        const dots = cards.map((_, index) => {
+          const dot = document.createElement("button");
+          dot.type = "button";
+          dot.className = "video-carousel-dot";
+          dot.setAttribute("aria-label", `Go to item ${index + 1}`);
+          dot.addEventListener("click", () => goTo(index, true));
+          dotsWrap.appendChild(dot);
+          return dot;
+        });
+
+        const sync = () => {
+          const stageWidth = stage.clientWidth;
+          const profile = window.innerWidth <= settings.mobileBreakpoint ? settings.mobile : settings.desktop;
+          const cardWidth = Math.min(Math.max(stageWidth * profile.cardWidthFactor, profile.cardWidthMin), profile.cardWidthMax);
+          const nearShift = Math.max(stageWidth * profile.nearShiftFactor, profile.nearShiftMin);
+          const farShift = Math.max(stageWidth * profile.farShiftFactor, profile.farShiftMin);
+
+          cards.forEach((card, index) => {
+            let diff = index - activeIndex;
+
+            if (diff > cards.length / 2) diff -= cards.length;
+            if (diff < -cards.length / 2) diff += cards.length;
+
+            const abs = Math.abs(diff);
+            let x = 0;
+            let y = 0;
+            let scale = 1;
+            let rotate = 0;
+            let opacity = 1;
+            let blur = 0;
+            let saturate = 1;
+
+            if (abs === 1) {
+              x = diff * nearShift;
+              y = profile.nearDrop;
+              scale = profile.nearScale;
+              rotate = diff * profile.nearRotate;
+              opacity = profile.nearOpacity;
+              blur = profile.nearBlur;
+              saturate = profile.nearSaturate;
+            } else if (abs >= 2) {
+              x = diff * farShift;
+              y = profile.farDrop;
+              scale = profile.farScale;
+              rotate = diff * profile.farRotate;
+              opacity = profile.farOpacity;
+              blur = profile.farBlur;
+              saturate = profile.farSaturate;
+            }
+
+            const filterValue = blur > 0.01 || Math.abs(saturate - 1) > 0.01
+              ? `blur(${blur}px) saturate(${saturate})`
+              : "none";
+
+            card.style.width = `${cardWidth}px`;
+            card.style.transform = `translateX(calc(-50% + ${x}px)) translateY(${y}px) translateZ(0) scale(${scale}) rotate(${rotate}deg)`;
+            card.style.opacity = opacity;
+            card.style.zIndex = String(20 - abs);
+            card.style.filter = filterValue;
+            card.style.pointerEvents = abs === 0 ? "auto" : "none";
+            card.dataset.state = abs === 0 ? "active" : abs === 1 ? "near" : "far";
+            card.setAttribute("aria-hidden", abs === 0 ? "false" : "true");
+          });
+
+          dots.forEach((dot, index) => {
+            const isActive = index === activeIndex;
+            dot.classList.toggle("active", isActive);
+            dot.setAttribute("aria-pressed", isActive ? "true" : "false");
+          });
+        };
+
+        const stop = () => {
+          if (autoTimer) {
+            window.clearInterval(autoTimer);
+            autoTimer = null;
+          }
+        };
+
+        const start = () => {
+          stop();
+          if (reducedMotion.matches || !isInViewport) return;
+          autoTimer = window.setInterval(() => goTo(activeIndex + 1), settings.interval);
+        };
+
+        const restart = () => {
+          start();
+        };
+
+        const goTo = (index, userInitiated = false) => {
+          activeIndex = (index + cards.length) % cards.length;
+          sync();
+          if (userInitiated) restart();
+        };
+
+        nextBtn?.addEventListener("click", () => goTo(activeIndex + 1, true));
+        prevBtn?.addEventListener("click", () => goTo(activeIndex - 1, true));
+
+        root.addEventListener("mouseenter", stop);
+        root.addEventListener("mouseleave", start);
+        root.addEventListener("focusin", stop);
+        root.addEventListener("focusout", start);
+        window.addEventListener("resize", sync);
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) {
+            stop();
+          } else {
+            start();
+          }
+        });
+
+        if ("IntersectionObserver" in window) {
+          const observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            if (!entry) return;
+
+            isInViewport = entry.isIntersecting;
+
+            if (isInViewport) {
+              activeIndex = 0;
+              sync();
+              start();
+            } else {
+              stop();
+            }
+          }, {
+            threshold: settings.threshold
+          });
+
+          observer.observe(root);
+        } else {
+          isInViewport = true;
+        }
+
+        const handleMotionChange = () => {
+          sync();
+          start();
+        };
+
+        if (typeof reducedMotion.addEventListener === "function") {
+          reducedMotion.addEventListener("change", handleMotionChange);
+        }
+
+        sync();
+        start();
+      };
+
+      initStackCarousel(document.querySelector("[data-video-carousel]"), {
+        interval: 4200,
+        threshold: 0.45,
+        mobileBreakpoint: 900,
+        desktop: {
+          cardWidthFactor: 0.34,
+          cardWidthMin: 270,
+          cardWidthMax: 360,
+          nearShiftFactor: 0.24,
+          nearShiftMin: 170,
+          farShiftFactor: 0.42,
+          farShiftMin: 320,
+          nearDrop: 32,
+          farDrop: 76,
+          nearScale: 0.92,
+          farScale: 0.82,
+          nearRotate: 5,
+          farRotate: 8,
+          nearOpacity: 0.76,
+          farOpacity: 0.38,
+          nearBlur: 0,
+          farBlur: 0,
+          nearSaturate: 1,
+          farSaturate: 1
+        },
+        mobile: {
+          cardWidthFactor: 0.62,
+          cardWidthMin: 270,
+          cardWidthMax: 360,
+          nearShiftFactor: 0.26,
+          nearShiftMin: 150,
+          farShiftFactor: 0.44,
+          farShiftMin: 250,
+          nearDrop: 36,
+          farDrop: 82,
+          nearScale: 0.92,
+          farScale: 0.82,
+          nearRotate: 5,
+          farRotate: 8,
+          nearOpacity: 0.76,
+          farOpacity: 0.38,
+          nearBlur: 0,
+          farBlur: 0,
+          nearSaturate: 1,
+          farSaturate: 1
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
