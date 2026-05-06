@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
+  <base href="../">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TobyKPI | Websites</title>
+  <title>TobyKPI | Videos</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Montserrat+Alternates:wght@800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
@@ -12,21 +14,20 @@
       color: var(--gold);
     }
 
-    .website-carousel-shell,
-    .website-carousel-stage {
+    .video-carousel-shell,
+    .video-carousel-stage {
       touch-action: pan-y;
     }
 
-    .website-carousel-stage {
+    .video-carousel-stage {
       cursor: grab;
     }
 
-    .website-carousel-stage.is-dragging {
+    .video-carousel-stage.is-dragging {
       cursor: grabbing;
     }
 
-    .website-carousel-stage.is-dragging iframe,
-    .website-carousel-stage.is-dragging .website-card-link {
+    .video-carousel-stage.is-dragging iframe {
       pointer-events: none;
     }
   </style>
@@ -40,8 +41,8 @@
       <ul>
         <li><a href="/">HOME</a></li>
         <li><a href="/results/">RESULTS</a></li>
-        <li><a href="/videos/">VIDEOS</a></li>
-        <li><a href="/websites/" class="nav-current">WEBSITES</a></li>
+        <li><a href="/videos/" class="nav-current">VIDEOS</a></li>
+        <li><a href="/websites/">WEBSITES</a></li>
         <li><a href="/music/">MUSIC</a></li>
         <li><a href="/upload/">UPLOAD HERE</a></li>
       </ul>
@@ -50,117 +51,87 @@
   </nav>
 
   <div class="content-wrapper">
-    <section class="section" id="websites">
-      <div class="text-block" style="grid-column: 1 / -1;">
-        <div class="eyebrow" style="display:block; text-align:center;">Web Design</div>
-        <h2 style="text-align:center;">Websites I've Built</h2>
-        <div class="video-carousel-section website-carousel-section">
-          <div class="video-carousel-shell website-carousel-shell" data-website-carousel>
-            <button class="video-carousel-btn prev" type="button" aria-label="Previous website" data-carousel-prev>&lsaquo;</button>
-            <button class="video-carousel-btn next" type="button" aria-label="Next website" data-carousel-next>&rsaquo;</button>
+    <section class="videos-section" id="videos">
+      <div class="videos-wrap">
+        <div class="videos-header">
+          <h2>Video Edits</h2>
+        </div>
 
-            <div class="website-carousel-stage" data-carousel-stage>
-              <div class="website-card" data-carousel-card>
-                <div class="website-card-shell">
-                  <div class="website-browser-bar">
-                    <div class="website-browser-dots">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    <div class="website-browser-url">fearapparel.shop</div>
-                  </div>
-                  <div class="website-preview-shell">
-                    <iframe src="https://fearapparel.shop" title="Fear Apparel live website preview" loading="lazy" scrolling="no"></iframe>
-                  </div>
-                  <div class="website-card-meta">
-                    <div class="website-card-copy">
-                      <h3>Fear Apparel</h3>
-                      <p>An ecommerce apparel website built to showcase products with a stronger brand presentation, a cleaner storefront experience, and a more polished online shopping presence.</p>
-                    </div>
-                    <div class="website-card-cta">Visit Website</div>
-                  </div>
-                </div>
-                <a href="https://fearapparel.shop" target="_blank" rel="noopener noreferrer" class="website-card-link" aria-label="Visit Fear Apparel website"></a>
+        <div class="featured-video-card">
+          <div class="featured-video-embed">
+            <iframe src="https://www.youtube.com/embed/uuUVuEqJLLM" title="Featured TobyKPI video 02" allowfullscreen></iframe>
+          </div>
+
+            <div class="featured-video-copy">
+              <div class="eyebrow" style="color:#c9a227;">Featured Edit</div>
+            <h3>From rough draft footage to final production.</h3>
+            <p>
+              This featured piece highlights my editing style through pacing, structure, presentation, and the kind of polish I aim for when shaping content into a stronger final result.
+            </p>
+            <p>
+              It reflects the way I approach short-form editing to make content feel cleaner, sharper, and more engaging for the viewer.
+            </p>
+
+            <div class="video-pill-row">
+              <span class="video-pill">Video Editing</span>
+              <span class="video-pill">Before & After</span>
+              <span class="video-pill">Creative Direction</span>
+              <span class="video-pill">Final Production</span>
+            </div>
+
+            <div class="featured-video-actions">
+              <a href="https://www.youtube.com/shorts/uuUVuEqJLLM" target="_blank" rel="noopener noreferrer" class="video-action-btn primary">Watch on YouTube</a>
+              <a href="/websites/" class="video-action-btn secondary">See More Work</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-carousel-section">
+          <div class="video-carousel-header">
+            <div class="eyebrow">Edited Shorts</div>
+          </div>
+
+          <div class="video-carousel-shell" data-video-carousel>
+            <button class="video-carousel-btn prev" type="button" aria-label="Previous video" data-carousel-prev>&lsaquo;</button>
+            <button class="video-carousel-btn next" type="button" aria-label="Next video" data-carousel-next>&rsaquo;</button>
+
+            <div class="video-carousel-stage" data-carousel-stage>
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/uuUVuEqJLLM" allowfullscreen title="Edited video project 03"></iframe>
               </div>
 
-              <div class="website-card" data-carousel-card>
-                <div class="website-card-shell">
-                  <div class="website-browser-bar">
-                    <div class="website-browser-dots">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    <div class="website-browser-url">drjoeevans.com</div>
-                  </div>
-                  <div class="website-preview-shell">
-                    <iframe src="https://drjoeevans.com" title="Dr. Joe Evans live website preview" loading="lazy" scrolling="no"></iframe>
-                  </div>
-                  <div class="website-card-meta">
-                    <div class="website-card-copy">
-                      <h3>Dr. Joe Evans</h3>
-                      <p>A professional personal brand website with strong visual structure, clean messaging, and a polished user experience built to support authority and visibility.</p>
-                    </div>
-                    <div class="website-card-cta">Visit Website</div>
-                  </div>
-                </div>
-                <a href="https://drjoeevans.com" target="_blank" rel="noopener noreferrer" class="website-card-link" aria-label="Visit Dr. Joe Evans website"></a>
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/8MdU-t9gTV8" allowfullscreen title="Edited video project 04"></iframe>
               </div>
 
-              <div class="website-card" data-carousel-card>
-                <div class="website-card-shell">
-                  <div class="website-browser-bar">
-                    <div class="website-browser-dots">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    <div class="website-browser-url">quickliftmoving.us</div>
-                  </div>
-                  <div class="website-preview-shell">
-                    <iframe src="https://quickliftmoving.us" title="Quick Lift Moving live website preview" loading="lazy" scrolling="no"></iframe>
-                  </div>
-                  <div class="website-card-meta">
-                    <div class="website-card-copy">
-                      <h3>Quick Lift Moving</h3>
-                      <p>A polished lead-generation website built around a free estimate request flow, clear service messaging, and a stronger online presence for a moving company brand.</p>
-                    </div>
-                    <div class="website-card-cta">Visit Website</div>
-                  </div>
-                </div>
-                <a href="https://quickliftmoving.us" target="_blank" rel="noopener noreferrer" class="website-card-link" aria-label="Visit Quick Lift Moving website"></a>
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/Fs7eAanrRZA" allowfullscreen title="Edited video project 05"></iframe>
               </div>
 
-              <div class="website-card" data-carousel-card>
-                <div class="website-card-shell">
-                  <div class="website-browser-bar">
-                    <div class="website-browser-dots">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                    <div class="website-browser-url">breathoflife.world</div>
-                  </div>
-                  <div class="website-preview-shell">
-                    <iframe src="https://breathoflife.world" title="Breath of Life Ministries live website preview" loading="lazy" scrolling="no"></iframe>
-                  </div>
-                  <div class="website-card-meta">
-                    <div class="website-card-copy">
-                      <h3>Breath of Life Ministries</h3>
-                      <p>A modern, responsive website designed and developed to strengthen online presence, improve presentation, and support community engagement.</p>
-                    </div>
-                    <div class="website-card-cta">Visit Website</div>
-                  </div>
-                </div>
-                <a href="https://breathoflife.world" target="_blank" rel="noopener noreferrer" class="website-card-link" aria-label="Visit Breath of Life Ministries website"></a>
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/oPNecKyTlnk" allowfullscreen title="Edited video project 06"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/PsCWtS2l67M" allowfullscreen title="Edited video project 07"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/oI_kAzuzg8c" allowfullscreen title="Edited video project 08"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/LrjiUg7E4SE" allowfullscreen title="Edited video project 09"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/P2TG4kXV0lU" allowfullscreen title="Edited video project 10"></iframe>
               </div>
             </div>
 
             <div class="video-carousel-dots" data-carousel-dots></div>
           </div>
         </div>
-
       </div>
     </section>
 
@@ -191,7 +162,6 @@
         let dragEngaged = false;
         let dragStartX = 0;
         let dragStartY = 0;
-        let suppressNextClick = false;
 
         const dots = cards.map((_, index) => {
           const dot = document.createElement("button");
@@ -343,22 +313,11 @@
           resetDrag();
 
           if (shouldSwipe) {
-            suppressNextClick = true;
-            window.setTimeout(() => {
-              suppressNextClick = false;
-            }, 0);
             goTo(activeIndex + (deltaX < 0 ? 1 : -1), true);
             return;
           }
 
           start();
-        };
-
-        const handleClickCapture = (event) => {
-          if (!suppressNextClick) return;
-          event.preventDefault();
-          event.stopPropagation();
-          suppressNextClick = false;
         };
 
         nextBtn?.addEventListener("click", () => goTo(activeIndex + 1, true));
@@ -367,7 +326,6 @@
         stage.addEventListener("pointermove", handlePointerMove, { passive: false });
         window.addEventListener("pointerup", handlePointerUp);
         window.addEventListener("pointercancel", resetDrag);
-        stage.addEventListener("click", handleClickCapture, true);
 
         root.addEventListener("mouseenter", stop);
         root.addEventListener("mouseleave", start);
@@ -418,25 +376,25 @@
         start();
       };
 
-      initStackCarousel(document.querySelector("[data-website-carousel]"), {
-        interval: 4600,
-        threshold: 0.4,
+      initStackCarousel(document.querySelector("[data-video-carousel]"), {
+        interval: 4200,
+        threshold: 0.45,
         mobileBreakpoint: 900,
         desktop: {
-          cardWidthFactor: 0.52,
-          cardWidthMin: 360,
-          cardWidthMax: 560,
-          nearShiftFactor: 0.22,
-          nearShiftMin: 200,
-          farShiftFactor: 0.38,
-          farShiftMin: 360,
-          nearDrop: 24,
-          farDrop: 62,
-          nearScale: 0.91,
-          farScale: 0.81,
-          nearRotate: 3,
-          farRotate: 6,
-          nearOpacity: 0.78,
+          cardWidthFactor: 0.34,
+          cardWidthMin: 270,
+          cardWidthMax: 360,
+          nearShiftFactor: 0.24,
+          nearShiftMin: 170,
+          farShiftFactor: 0.42,
+          farShiftMin: 320,
+          nearDrop: 32,
+          farDrop: 76,
+          nearScale: 0.92,
+          farScale: 0.82,
+          nearRotate: 5,
+          farRotate: 8,
+          nearOpacity: 0.76,
           farOpacity: 0.38,
           nearBlur: 0,
           farBlur: 0,
@@ -444,21 +402,21 @@
           farSaturate: 1
         },
         mobile: {
-          cardWidthFactor: 0.86,
-          cardWidthMin: 280,
-          cardWidthMax: 500,
-          nearShiftFactor: 0.16,
-          nearShiftMin: 90,
-          farShiftFactor: 0.28,
-          farShiftMin: 170,
-          nearDrop: 22,
-          farDrop: 52,
-          nearScale: 0.93,
-          farScale: 0.84,
-          nearRotate: 2,
-          farRotate: 5,
-          nearOpacity: 0.8,
-          farOpacity: 0.34,
+          cardWidthFactor: 0.62,
+          cardWidthMin: 270,
+          cardWidthMax: 360,
+          nearShiftFactor: 0.26,
+          nearShiftMin: 150,
+          farShiftFactor: 0.44,
+          farShiftMin: 250,
+          nearDrop: 36,
+          farDrop: 82,
+          nearScale: 0.92,
+          farScale: 0.82,
+          nearRotate: 5,
+          farRotate: 8,
+          nearOpacity: 0.76,
+          farOpacity: 0.38,
           nearBlur: 0,
           farBlur: 0,
           nearSaturate: 1,
