@@ -11,6 +11,23 @@
     .nav-current {
       color: var(--gold);
     }
+
+    .video-carousel-shell,
+    .video-carousel-stage {
+      touch-action: pan-y;
+    }
+
+    .video-carousel-stage {
+      cursor: grab;
+    }
+
+    .video-carousel-stage.is-dragging {
+      cursor: grabbing;
+    }
+
+    .video-carousel-stage.is-dragging iframe {
+      pointer-events: none;
+    }
   </style>
 </head>
 
@@ -25,6 +42,7 @@
         <li><a href="videos.html" class="nav-current">VIDEOS</a></li>
         <li><a href="websites.html">WEBSITES</a></li>
         <li><a href="music-mixing.html">MUSIC</a></li>
+        <li><a href="upload.html">UPLOAD HERE</a></li>
       </ul>
       <a href="mailto:work@tobykpi.com" class="nav-contact">work@tobykpi.com</a>
     </div>
@@ -34,37 +52,22 @@
     <section class="videos-section" id="videos">
       <div class="videos-wrap">
         <div class="videos-header">
-          <div class="eyebrow">Edited By Me</div>
-          <h2>Videos</h2>
-        </div>
-
-        <div class="featured-video-card vsl-feature-card">
-          <div class="vsl-feature-header">
-            <h3>WATCH NOW</h3>
-          </div>
-
-          <div class="featured-video-embed landscape">
-            <iframe src="https://www.youtube.com/embed/F_Ciw-zu3yA" title="VSL explaining TobyKPI services" allowfullscreen></iframe>
-          </div>
-
-          <div class="featured-video-actions">
-            <a href="https://www.youtube.com/watch?v=F_Ciw-zu3yA" target="_blank" rel="noopener noreferrer" class="video-action-btn primary">Watch on YouTube</a>
-          </div>
+          <h2>Video Edits</h2>
         </div>
 
         <div class="featured-video-card">
           <div class="featured-video-embed">
-            <iframe src="https://www.youtube.com/embed/JgDcndYlosk" title="Rough draft vs final production comparison" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/uuUVuEqJLLM" title="Featured TobyKPI video 02" allowfullscreen></iframe>
           </div>
 
-          <div class="featured-video-copy">
-            <div class="eyebrow" style="color:#c9a227;">Featured Edit</div>
+            <div class="featured-video-copy">
+              <div class="eyebrow" style="color:#c9a227;">Featured Edit</div>
             <h3>From rough draft footage to final production.</h3>
             <p>
-              This featured video gives a direct look at my editing process by showing the difference between the original draft and the finished version. It highlights how I shape raw content into something cleaner, stronger, and more engaging through editing choices that improve flow, clarity, and impact.
+              This featured piece highlights my editing style through pacing, structure, presentation, and the kind of polish I aim for when shaping content into a stronger final result.
             </p>
             <p>
-              I edited this to showcase how production value can change the way content feels, not just visually, but emotionally and strategically too.
+              It reflects the way I approach short-form editing to make content feel cleaner, sharper, and more engaging for the viewer.
             </p>
 
             <div class="video-pill-row">
@@ -75,7 +78,7 @@
             </div>
 
             <div class="featured-video-actions">
-              <a href="https://www.youtube.com/shorts/JgDcndYlosk?feature=share" target="_blank" rel="noopener noreferrer" class="video-action-btn primary">Watch on YouTube</a>
+              <a href="https://www.youtube.com/shorts/uuUVuEqJLLM" target="_blank" rel="noopener noreferrer" class="video-action-btn primary">Watch on YouTube</a>
               <a href="websites.html" class="video-action-btn secondary">See More Work</a>
             </div>
           </div>
@@ -92,27 +95,35 @@
 
             <div class="video-carousel-stage" data-carousel-stage>
               <div class="video-card" data-carousel-card>
-                <iframe src="https://www.youtube.com/embed/8AmfpP6Lyi0" allowfullscreen title="Edited video project 05"></iframe>
+                <iframe src="https://www.youtube.com/embed/uuUVuEqJLLM" allowfullscreen title="Edited video project 03"></iframe>
               </div>
 
               <div class="video-card" data-carousel-card>
-                <iframe src="https://www.youtube.com/embed/E06iUGbZ2wA" allowfullscreen title="Edited video project 06"></iframe>
+                <iframe src="https://www.youtube.com/embed/8MdU-t9gTV8" allowfullscreen title="Edited video project 04"></iframe>
               </div>
 
               <div class="video-card" data-carousel-card>
-                <iframe src="https://www.youtube.com/embed/Gyx5C-_2Q6g" allowfullscreen title="Edited video project 04"></iframe>
+                <iframe src="https://www.youtube.com/embed/Fs7eAanrRZA" allowfullscreen title="Edited video project 05"></iframe>
               </div>
 
               <div class="video-card" data-carousel-card>
-                <iframe src="https://www.youtube.com/embed/0eSTY6EWA8Q" allowfullscreen title="Edited video project 03"></iframe>
+                <iframe src="https://www.youtube.com/embed/oPNecKyTlnk" allowfullscreen title="Edited video project 06"></iframe>
               </div>
 
               <div class="video-card" data-carousel-card>
-                <iframe src="https://www.youtube.com/embed/yXpyuzl4BVs" allowfullscreen title="Edited video project 01"></iframe>
+                <iframe src="https://www.youtube.com/embed/PsCWtS2l67M" allowfullscreen title="Edited video project 07"></iframe>
               </div>
 
               <div class="video-card" data-carousel-card>
-                <iframe src="https://www.youtube.com/embed/M8N_66dE4uc" allowfullscreen title="Edited video project 02"></iframe>
+                <iframe src="https://www.youtube.com/embed/oI_kAzuzg8c" allowfullscreen title="Edited video project 08"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/LrjiUg7E4SE" allowfullscreen title="Edited video project 09"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/P2TG4kXV0lU" allowfullscreen title="Edited video project 10"></iframe>
               </div>
             </div>
 
@@ -145,6 +156,10 @@
         let activeIndex = 0;
         let autoTimer = null;
         let isInViewport = false;
+        let pointerActive = false;
+        let dragEngaged = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
 
         const dots = cards.map((_, index) => {
           const dot = document.createElement("button");
@@ -240,8 +255,75 @@
           if (userInitiated) restart();
         };
 
+        const resetDrag = () => {
+          pointerActive = false;
+          dragEngaged = false;
+          stage.classList.remove("is-dragging");
+        };
+
+        const handlePointerDown = (event) => {
+          if (event.pointerType === "mouse" && event.button !== 0) return;
+
+          pointerActive = true;
+          dragEngaged = false;
+          dragStartX = event.clientX;
+          dragStartY = event.clientY;
+          stop();
+
+          if (typeof stage.setPointerCapture === "function") {
+            try {
+              stage.setPointerCapture(event.pointerId);
+            } catch {}
+          }
+        };
+
+        const handlePointerMove = (event) => {
+          if (!pointerActive) return;
+
+          const deltaX = event.clientX - dragStartX;
+          const deltaY = event.clientY - dragStartY;
+
+          if (!dragEngaged) {
+            if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 14) {
+              resetDrag();
+              start();
+              return;
+            }
+
+            if (Math.abs(deltaX) < 18) return;
+
+            dragEngaged = true;
+            stage.classList.add("is-dragging");
+          }
+
+          if (dragEngaged && event.cancelable) {
+            event.preventDefault();
+          }
+        };
+
+        const handlePointerUp = (event) => {
+          if (!pointerActive) return;
+
+          const deltaX = event.clientX - dragStartX;
+          const deltaY = event.clientY - dragStartY;
+          const shouldSwipe = dragEngaged && Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 55;
+
+          resetDrag();
+
+          if (shouldSwipe) {
+            goTo(activeIndex + (deltaX < 0 ? 1 : -1), true);
+            return;
+          }
+
+          start();
+        };
+
         nextBtn?.addEventListener("click", () => goTo(activeIndex + 1, true));
         prevBtn?.addEventListener("click", () => goTo(activeIndex - 1, true));
+        stage.addEventListener("pointerdown", handlePointerDown);
+        stage.addEventListener("pointermove", handlePointerMove, { passive: false });
+        window.addEventListener("pointerup", handlePointerUp);
+        window.addEventListener("pointercancel", resetDrag);
 
         root.addEventListener("mouseenter", stop);
         root.addEventListener("mouseleave", start);

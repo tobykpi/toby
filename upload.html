@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TobyKPI | Upload Here</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Montserrat+Alternates:wght@800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .nav-current {
+      color: var(--gold);
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="brand">TOBYKPI</div>
+    <div class="nav-right">
+      <ul>
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="results.html">RESULTS</a></li>
+        <li><a href="videos.html">VIDEOS</a></li>
+        <li><a href="websites.html">WEBSITES</a></li>
+        <li><a href="music-mixing.html">MUSIC</a></li>
+        <li><a href="upload.html" class="nav-current">UPLOAD HERE</a></li>
+      </ul>
+      <a href="mailto:work@tobykpi.com" class="nav-contact">work@tobykpi.com</a>
+    </div>
+  </nav>
+
+  <main class="upload-page">
+    <section class="upload-wrap">
+      <div class="upload-header">
+        <div class="eyebrow">Video Dropbox</div>
+        <h1>Upload Here</h1>
+        <p>Unlock the dropbox to send video files directly to the project Drive folder.</p>
+      </div>
+
+      <div class="dropbox-gate is-locked" id="dropbox-gate">
+        <div class="dropbox-content" id="dropbox-content">
+          <div class="video-dropbox" id="video-dropbox" tabindex="0" role="button" aria-describedby="video-upload-status">
+            <input class="video-file-input" id="videos" type="file" name="videos" accept="video/*" multiple>
+            <div class="video-upload-icon">+</div>
+            <div class="video-upload-title">Drag videos here or browse</div>
+            <p class="video-upload-copy">Accepted formats include MP4, MOV, WEBM, AVI, and other video files.</p>
+            <button class="video-upload-link" id="browse-videos" type="button">Choose Videos</button>
+            <p class="video-upload-status" id="video-upload-status">No videos selected yet.</p>
+            <div class="video-upload-list" id="video-upload-list"></div>
+          </div>
+
+          <button class="drive-upload-button" id="send-videos" type="button" disabled>Upload</button>
+          <p class="drive-upload-status" id="drive-upload-status">Choose one or more videos to upload.</p>
+          <div class="upload-progress" id="upload-progress" hidden>
+            <div class="upload-progress-track">
+              <div class="upload-progress-fill" id="upload-progress-fill"></div>
+            </div>
+            <p class="upload-progress-label" id="upload-progress-label">0%</p>
+          </div>
+        </div>
+
+        <form class="dropbox-lock" id="dropbox-lock">
+          <label for="dropbox-password">Passkey</label>
+          <div class="dropbox-lock-row">
+            <input id="dropbox-password" type="password" autocomplete="current-password" placeholder="Enter passkey">
+            <button type="submit">Unlock</button>
+          </div>
+          <p class="dropbox-lock-status" id="dropbox-lock-status">Enter the passkey to access the video dropbox.</p>
+        </form>
+      </div>
+
+      <form class="drive-upload-form" id="drive-upload-form" method="POST" target="drive-upload-frame">
+        <input type="hidden" name="filename" id="drive-upload-filename">
+        <input type="hidden" name="mimeType" id="drive-upload-mimetype">
+        <textarea name="fileData" id="drive-upload-data"></textarea>
+      </form>
+      <iframe class="drive-upload-frame" name="drive-upload-frame" id="drive-upload-frame" title="Drive upload response"></iframe>
+
+    </section>
+  </main>
+
+  <footer>
+    <p style="letter-spacing: 3px; font-size: 14px;">TOBYKPI PORTFOLIO</p>
+    <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;">&copy; 2026 TobyKPI. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const allowedDropboxPasswords = ["hermes"];
+    const dropboxGate = document.getElementById("dropbox-gate");
+    const dropboxLock = document.getElementById("dropbox-lock");
+    const dropboxPassword = document.getElementById("dropbox-password");
+    const dropboxLockStatus = document.getElementById("dropbox-lock-status");
+    const dropboxContent = document.getElementById("dropbox-content");
+    const videoInput = document.getElementById("videos");
+    const videoDropBox = document.getElementById("video-dropbox");
+    const videoBrowseButton = document.getElementById("browse-videos");
+    const videoUploadList = document.getElementById("video-upload-list");
+    const videoUploadStatus = document.getElementById("video-upload-status");
+    const sendVideosButton = document.getElementById("send-videos");
+    const driveUploadStatus = document.getElementById("drive-upload-status");
+    const driveUploadForm = document.getElementById("drive-upload-form");
+    const driveUploadFrame = document.getElementById("drive-upload-frame");
+    const driveUploadFilename = document.getElementById("drive-upload-filename");
+    const driveUploadMimeType = document.getElementById("drive-upload-mimetype");
+    const driveUploadData = document.getElementById("drive-upload-data");
+    const uploadProgress = document.getElementById("upload-progress");
+    const uploadProgressFill = document.getElementById("upload-progress-fill");
+    const uploadProgressLabel = document.getElementById("upload-progress-label");
+    const driveUploadEndpoint = "https://script.google.com/macros/s/AKfycbyTu8umstOmPBselZx2DToFmrxgkAlN1MzFZLjucmoaEjVK_h1EmVDVi9KcDYJxVOc/exec";
+
+    const unlockDropbox = () => {
+      if (dropboxLock) {
+        dropboxLock.hidden = true;
+      }
+
+      if (dropboxGate) {
+        dropboxGate.classList.remove("is-locked");
+      }
+    };
+
+    if (sessionStorage.getItem("tobykpiDropboxUnlocked") === "true") {
+      unlockDropbox();
+    }
+
+    if (dropboxLock && dropboxPassword && dropboxLockStatus) {
+      dropboxLock.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const enteredPassword = dropboxPassword.value.trim().toLowerCase();
+        const isAllowed = allowedDropboxPasswords.some((password) => password.toLowerCase() === enteredPassword);
+
+        if (!isAllowed) {
+          dropboxLockStatus.textContent = "Incorrect password. Please try again.";
+          dropboxPassword.value = "";
+          dropboxPassword.focus();
+          return;
+        }
+
+        sessionStorage.setItem("tobykpiDropboxUnlocked", "true");
+        unlockDropbox();
+      });
+    }
+
+    if (videoInput && videoDropBox && videoUploadList && videoUploadStatus && videoBrowseButton && sendVideosButton && driveUploadStatus && driveUploadForm && driveUploadFrame && driveUploadFilename && driveUploadMimeType && driveUploadData && uploadProgress && uploadProgressFill && uploadProgressLabel) {
+      const setVideoFiles = (files) => {
+        const videosOnly = Array.from(files).filter((file) => file.type.startsWith("video/"));
+        const transfer = new DataTransfer();
+
+        videosOnly.forEach((file) => transfer.items.add(file));
+        videoInput.files = transfer.files;
+        updateVideoList();
+      };
+
+      const updateVideoList = () => {
+        videoUploadList.innerHTML = "";
+
+        if (!videoInput.files || videoInput.files.length === 0) {
+          videoUploadStatus.textContent = "No videos selected yet.";
+          sendVideosButton.disabled = true;
+          return;
+        }
+
+        const label = videoInput.files.length === 1 ? "video selected" : "videos selected";
+        videoUploadStatus.textContent = videoInput.files.length + " " + label;
+        sendVideosButton.disabled = false;
+
+        Array.from(videoInput.files).forEach((file) => {
+          const item = document.createElement("div");
+          item.className = "video-upload-item";
+          item.textContent = file.name;
+          videoUploadList.appendChild(item);
+        });
+      };
+
+      const openFilePicker = () => {
+        videoInput.click();
+      };
+
+      videoBrowseButton.addEventListener("click", (event) => {
+        event.preventDefault();
+        openFilePicker();
+      });
+
+      videoDropBox.addEventListener("click", (event) => {
+        if (event.target === videoBrowseButton) {
+          return;
+        }
+
+        openFilePicker();
+      });
+
+      videoDropBox.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openFilePicker();
+        }
+      });
+
+      videoInput.addEventListener("change", () => {
+        setVideoFiles(videoInput.files);
+      });
+
+      ["dragenter", "dragover"].forEach((eventName) => {
+        videoDropBox.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          videoDropBox.classList.add("is-dragover");
+        });
+      });
+
+      ["dragleave", "dragend", "drop"].forEach((eventName) => {
+        videoDropBox.addEventListener(eventName, (event) => {
+          event.preventDefault();
+          videoDropBox.classList.remove("is-dragover");
+        });
+      });
+
+      videoDropBox.addEventListener("drop", (event) => {
+        if (!event.dataTransfer || !event.dataTransfer.files) {
+          return;
+        }
+
+        setVideoFiles(event.dataTransfer.files);
+      });
+
+      const setUploadProgress = (percent) => {
+        const clampedPercent = Math.max(0, Math.min(100, Math.round(percent)));
+        uploadProgressFill.style.width = clampedPercent + "%";
+        uploadProgressLabel.textContent = clampedPercent + "%";
+      };
+
+      const setOverallProgress = (fileIndex, totalFiles, fileProgress) => {
+        setUploadProgress(((fileIndex + fileProgress) / totalFiles) * 100);
+      };
+
+      const readFileAsDataUrl = (file, onProgress) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(reader.error);
+        reader.onprogress = (event) => {
+          if (event.lengthComputable) {
+            onProgress(event.loaded / event.total);
+          }
+        };
+        reader.readAsDataURL(file);
+      });
+
+      const uploadOneVideo = async (file, index, total) => {
+        const dataUrl = await readFileAsDataUrl(file, (readProgress) => {
+          setOverallProgress(index, total, readProgress * 0.3);
+        });
+
+        return new Promise((resolve) => {
+          let animatedProgress = 0.3;
+          let uploadTimer = null;
+
+          driveUploadFrame.onload = () => {
+            if (uploadTimer) {
+              clearInterval(uploadTimer);
+            }
+
+            setOverallProgress(index, total, 1);
+            resolve();
+          };
+
+          driveUploadFilename.value = file.name;
+          driveUploadMimeType.value = file.type || "application/octet-stream";
+          driveUploadData.value = String(dataUrl).split(",")[1] || "";
+          driveUploadStatus.textContent = "Uploading " + (index + 1) + " of " + total + ": " + file.name;
+          setOverallProgress(index, total, animatedProgress);
+
+          uploadTimer = setInterval(() => {
+            animatedProgress = Math.min(animatedProgress + 0.025, 0.95);
+            setOverallProgress(index, total, animatedProgress);
+          }, 450);
+
+          driveUploadForm.submit();
+        });
+      };
+
+      sendVideosButton.addEventListener("click", async () => {
+        if (driveUploadEndpoint === "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE") {
+          driveUploadStatus.textContent = "Upload backend is not connected yet. Paste your deployed Apps Script web app URL into upload.html.";
+          return;
+        }
+
+        const files = Array.from(videoInput.files || []);
+
+        if (files.length === 0) {
+          driveUploadStatus.textContent = "Choose one or more videos to upload.";
+          return;
+        }
+
+        sendVideosButton.disabled = true;
+        driveUploadForm.action = driveUploadEndpoint;
+        uploadProgress.hidden = false;
+        setUploadProgress(0);
+
+        try {
+          for (let index = 0; index < files.length; index += 1) {
+            await uploadOneVideo(files[index], index, files.length);
+          }
+
+          driveUploadData.value = "";
+          setUploadProgress(100);
+          driveUploadStatus.textContent = files.length === 1 ? "Upload complete." : "Uploads complete.";
+        } catch (error) {
+          driveUploadStatus.textContent = "Upload failed. Please try again.";
+        } finally {
+          sendVideosButton.disabled = false;
+        }
+      });
+    }
+  </script>
+</body>
+</html>

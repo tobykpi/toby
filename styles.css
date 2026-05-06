@@ -1908,6 +1908,340 @@
       padding: 60px 20px;
     }
 
+    .upload-page {
+      min-height: 100vh;
+      padding: 138px 24px 72px;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(68,227,141,0.13), transparent 24%),
+        radial-gradient(circle at 82% 12%, rgba(201,162,39,0.13), transparent 22%),
+        linear-gradient(150deg, #09090b 0%, #101014 52%, #111111 100%);
+      color: var(--white);
+    }
+
+    .upload-wrap {
+      width: min(100%, 780px);
+      margin: 0 auto;
+      padding: 34px;
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.018)),
+        rgba(18,20,24,0.92);
+      box-shadow: 0 34px 80px rgba(0,0,0,0.38);
+    }
+
+    .upload-header {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .upload-header h1 {
+      font-size: clamp(42px, 8vw, 72px);
+      line-height: 0.98;
+      font-weight: 900;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .upload-header p {
+      max-width: 560px;
+      margin: 0 auto;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .video-dropbox {
+      position: relative;
+      padding: 30px 24px;
+      border: 1.5px dashed rgba(255,255,255,0.18);
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018)),
+        rgba(255,255,255,0.025);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.04),
+        0 24px 34px rgba(0,0,0,0.16);
+      text-align: center;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .dropbox-gate {
+      position: relative;
+      display: grid;
+    }
+
+    .dropbox-content {
+      transition: filter 0.25s ease, opacity 0.25s ease;
+    }
+
+    .dropbox-gate.is-locked .dropbox-content {
+      filter: blur(8px);
+      opacity: 0.48;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .dropbox-lock {
+      position: absolute;
+      z-index: 3;
+      top: 50%;
+      left: 50%;
+      width: min(100% - 44px, 620px);
+      transform: translate(-50%, -50%);
+      display: grid;
+      gap: 12px;
+      padding: 26px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.09), rgba(255,255,255,0.035)),
+        rgba(22,24,29,0.84);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.34);
+      backdrop-filter: blur(16px);
+    }
+
+    .dropbox-lock label {
+      color: rgba(255,255,255,0.82);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .dropbox-lock-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+    }
+
+    .dropbox-lock input {
+      width: 100%;
+      min-width: 0;
+      padding: 16px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      color: var(--white);
+      font: inherit;
+    }
+
+    .dropbox-lock input:focus {
+      outline: none;
+      border-color: rgba(201,162,39,0.72);
+      box-shadow: 0 0 0 3px rgba(201,162,39,0.13);
+    }
+
+    .dropbox-lock button {
+      padding: 0 22px;
+      border-radius: 14px;
+      border: 1px solid rgba(201,162,39,0.36);
+      background: rgba(201,162,39,0.14);
+      color: var(--gold);
+      font: inherit;
+      font-weight: 900;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .dropbox-lock-status {
+      color: rgba(255,255,255,0.72);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .dropbox-lock[hidden] {
+      display: none;
+    }
+
+    .video-dropbox:hover,
+    .video-dropbox.is-dragover {
+      border-color: rgba(201,162,39,0.72);
+      background:
+        linear-gradient(180deg, rgba(201,162,39,0.10), rgba(255,255,255,0.03)),
+        rgba(255,255,255,0.03);
+      box-shadow:
+        0 0 0 3px rgba(201,162,39,0.12),
+        0 20px 36px rgba(0,0,0,0.2);
+      transform: translateY(-2px);
+    }
+
+    .video-file-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      width: 1px;
+      height: 1px;
+    }
+
+    .video-upload-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(201,162,39,0.34);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.12), transparent 70%),
+        rgba(201,162,39,0.10);
+      color: var(--gold);
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .video-upload-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.94);
+    }
+
+    .video-upload-copy {
+      margin-top: 8px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .video-upload-link,
+    .drive-upload-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font: inherit;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      cursor: pointer;
+    }
+
+    .video-upload-link {
+      margin-top: 16px;
+      padding: 11px 17px;
+      border-radius: 999px;
+      border: 1px solid rgba(201,162,39,0.36);
+      background: rgba(201,162,39,0.12);
+      color: var(--gold);
+    }
+
+    .video-upload-status {
+      margin-top: 14px;
+      color: rgba(255,255,255,0.72);
+      font-size: 14px;
+    }
+
+    .video-upload-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .video-upload-list:empty {
+      display: none;
+    }
+
+    .video-upload-item {
+      padding: 11px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.025)),
+        rgba(255,255,255,0.03);
+      color: rgba(255,255,255,0.84);
+      font-size: 14px;
+      text-align: left;
+      word-break: break-word;
+    }
+
+    .drive-upload-button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 18px 20px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #ffffff, #e9f8f8);
+      color: #0f1013;
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 18px 40px rgba(255,255,255,0.16);
+    }
+
+    .drive-upload-button:disabled {
+      cursor: not-allowed;
+      opacity: 0.48;
+      transform: none;
+    }
+
+    .drive-upload-button:hover {
+      background: linear-gradient(135deg, #fff0c1, #c9a227);
+      color: #111111;
+      transform: translateY(-2px);
+    }
+
+    .drive-upload-button:disabled:hover {
+      background: linear-gradient(135deg, #ffffff, #e9f8f8);
+      color: #0f1013;
+      transform: none;
+    }
+
+    .drive-upload-status {
+      margin-top: 14px;
+      color: rgba(255,255,255,0.72);
+      font-size: 14px;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .upload-progress {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .upload-progress[hidden] {
+      display: none;
+    }
+
+    .upload-progress-track {
+      width: 100%;
+      height: 12px;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+    }
+
+    .upload-progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #44e38d, #c9a227);
+      box-shadow: 0 0 18px rgba(201,162,39,0.28);
+      transition: width 0.25s ease;
+    }
+
+    .upload-progress-label {
+      color: rgba(255,255,255,0.72);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      text-align: center;
+    }
+
+    .drive-upload-form,
+    .drive-upload-frame {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
@@ -2228,7 +2562,8 @@
       }
 
       .hero-button,
-      .video-action-btn {
+      .video-action-btn,
+      .drive-upload-button {
         width: 100%;
       }
 
@@ -2239,6 +2574,27 @@
       .hero-tag {
         width: 100%;
         justify-content: center;
+      }
+
+      .upload-wrap {
+        padding: 24px 18px;
+        border-radius: 22px;
+      }
+
+      .video-dropbox {
+        padding: 26px 16px;
+      }
+
+      .dropbox-lock {
+        padding: 20px 16px;
+      }
+
+      .dropbox-lock-row {
+        grid-template-columns: 1fr;
+      }
+
+      .dropbox-lock button {
+        min-height: 52px;
       }
     }
 

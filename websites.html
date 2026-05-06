@@ -11,6 +11,24 @@
     .nav-current {
       color: var(--gold);
     }
+
+    .website-carousel-shell,
+    .website-carousel-stage {
+      touch-action: pan-y;
+    }
+
+    .website-carousel-stage {
+      cursor: grab;
+    }
+
+    .website-carousel-stage.is-dragging {
+      cursor: grabbing;
+    }
+
+    .website-carousel-stage.is-dragging iframe,
+    .website-carousel-stage.is-dragging .website-card-link {
+      pointer-events: none;
+    }
   </style>
 </head>
 
@@ -25,6 +43,7 @@
         <li><a href="videos.html">VIDEOS</a></li>
         <li><a href="websites.html" class="nav-current">WEBSITES</a></li>
         <li><a href="music-mixing.html">MUSIC</a></li>
+        <li><a href="upload.html">UPLOAD HERE</a></li>
       </ul>
       <a href="mailto:work@tobykpi.com" class="nav-contact">work@tobykpi.com</a>
     </div>
@@ -168,6 +187,11 @@
         let activeIndex = 0;
         let autoTimer = null;
         let isInViewport = false;
+        let pointerActive = false;
+        let dragEngaged = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+        let suppressNextClick = false;
 
         const dots = cards.map((_, index) => {
           const dot = document.createElement("button");
@@ -263,8 +287,87 @@
           if (userInitiated) restart();
         };
 
+        const resetDrag = () => {
+          pointerActive = false;
+          dragEngaged = false;
+          stage.classList.remove("is-dragging");
+        };
+
+        const handlePointerDown = (event) => {
+          if (event.pointerType === "mouse" && event.button !== 0) return;
+
+          pointerActive = true;
+          dragEngaged = false;
+          dragStartX = event.clientX;
+          dragStartY = event.clientY;
+          stop();
+
+          if (typeof stage.setPointerCapture === "function") {
+            try {
+              stage.setPointerCapture(event.pointerId);
+            } catch {}
+          }
+        };
+
+        const handlePointerMove = (event) => {
+          if (!pointerActive) return;
+
+          const deltaX = event.clientX - dragStartX;
+          const deltaY = event.clientY - dragStartY;
+
+          if (!dragEngaged) {
+            if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 14) {
+              resetDrag();
+              start();
+              return;
+            }
+
+            if (Math.abs(deltaX) < 18) return;
+
+            dragEngaged = true;
+            stage.classList.add("is-dragging");
+          }
+
+          if (dragEngaged && event.cancelable) {
+            event.preventDefault();
+          }
+        };
+
+        const handlePointerUp = (event) => {
+          if (!pointerActive) return;
+
+          const deltaX = event.clientX - dragStartX;
+          const deltaY = event.clientY - dragStartY;
+          const shouldSwipe = dragEngaged && Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 55;
+
+          resetDrag();
+
+          if (shouldSwipe) {
+            suppressNextClick = true;
+            window.setTimeout(() => {
+              suppressNextClick = false;
+            }, 0);
+            goTo(activeIndex + (deltaX < 0 ? 1 : -1), true);
+            return;
+          }
+
+          start();
+        };
+
+        const handleClickCapture = (event) => {
+          if (!suppressNextClick) return;
+          event.preventDefault();
+          event.stopPropagation();
+          suppressNextClick = false;
+        };
+
         nextBtn?.addEventListener("click", () => goTo(activeIndex + 1, true));
         prevBtn?.addEventListener("click", () => goTo(activeIndex - 1, true));
+        stage.addEventListener("pointerdown", handlePointerDown);
+        stage.addEventListener("pointermove", handlePointerMove, { passive: false });
+        window.addEventListener("pointerup", handlePointerUp);
+        window.addEventListener("pointercancel", resetDrag);
+        stage.addEventListener("click", handleClickCapture, true);
 
         root.addEventListener("mouseenter", stop);
         root.addEventListener("mouseleave", start);
