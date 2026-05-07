@@ -36,29 +36,30 @@
       <div class="upload-header">
         <div class="eyebrow">Video Dropbox</div>
         <h1>Upload Here</h1>
-        <p>Unlock the dropbox to send video files directly to the project Drive folder.</p>
+        <p>Unlock the dropbox to send videos and pictures directly to the project folder.</p>
       </div>
 
       <div class="dropbox-gate is-locked" id="dropbox-gate">
         <div class="dropbox-content" id="dropbox-content">
           <div class="video-dropbox" id="video-dropbox" tabindex="0" role="button" aria-describedby="video-upload-status">
-            <input class="video-file-input" id="videos" type="file" name="videos" accept="video/*" multiple>
+            <input class="video-file-input" id="videos" type="file" name="videos" accept="video/*,image/*" multiple>
             <div class="video-upload-icon">+</div>
-            <div class="video-upload-title">Drag videos here or browse</div>
-            <p class="video-upload-copy">Accepted formats include MP4, MOV, WEBM, AVI, and other video files.</p>
-            <button class="video-upload-link" id="browse-videos" type="button">Choose Videos</button>
-            <p class="video-upload-status" id="video-upload-status">No videos selected yet.</p>
+            <div class="video-upload-title">Drag media here or browse</div>
+            <p class="video-upload-copy">Accepted formats include videos and pictures.</p>
+            <button class="video-upload-link" id="browse-videos" type="button">Choose Files</button>
+            <p class="video-upload-status" id="video-upload-status">No files selected yet.</p>
             <div class="video-upload-list" id="video-upload-list"></div>
           </div>
 
           <button class="drive-upload-button" id="send-videos" type="button" disabled>Upload</button>
-          <p class="drive-upload-status" id="drive-upload-status">Choose one or more videos to upload.</p>
+          <p class="drive-upload-status" id="drive-upload-status">Choose one or more files to upload.</p>
           <div class="upload-progress" id="upload-progress" hidden>
             <div class="upload-progress-track">
               <div class="upload-progress-fill" id="upload-progress-fill"></div>
             </div>
             <p class="upload-progress-label" id="upload-progress-label">0%</p>
           </div>
+          <button class="upload-cancel-button" id="cancel-upload" type="button" hidden>Cancel Upload</button>
         </div>
 
         <form class="dropbox-lock" id="dropbox-lock">
@@ -67,16 +68,9 @@
             <input id="dropbox-password" type="password" autocomplete="current-password" placeholder="Enter passkey">
             <button type="submit">Unlock</button>
           </div>
-          <p class="dropbox-lock-status" id="dropbox-lock-status">Enter the passkey to access the video dropbox.</p>
+          <p class="dropbox-lock-status" id="dropbox-lock-status">Enter the passkey to access the media dropbox.</p>
         </form>
       </div>
-
-      <form class="drive-upload-form" id="drive-upload-form" method="POST" target="drive-upload-frame">
-        <input type="hidden" name="filename" id="drive-upload-filename">
-        <input type="hidden" name="mimeType" id="drive-upload-mimetype">
-        <textarea name="fileData" id="drive-upload-data"></textarea>
-      </form>
-      <iframe class="drive-upload-frame" name="drive-upload-frame" id="drive-upload-frame" title="Drive upload response"></iframe>
 
     </section>
   </main>
@@ -100,15 +94,14 @@
     const videoUploadStatus = document.getElementById("video-upload-status");
     const sendVideosButton = document.getElementById("send-videos");
     const driveUploadStatus = document.getElementById("drive-upload-status");
-    const driveUploadForm = document.getElementById("drive-upload-form");
-    const driveUploadFrame = document.getElementById("drive-upload-frame");
-    const driveUploadFilename = document.getElementById("drive-upload-filename");
-    const driveUploadMimeType = document.getElementById("drive-upload-mimetype");
-    const driveUploadData = document.getElementById("drive-upload-data");
     const uploadProgress = document.getElementById("upload-progress");
     const uploadProgressFill = document.getElementById("upload-progress-fill");
     const uploadProgressLabel = document.getElementById("upload-progress-label");
-    const driveUploadEndpoint = "https://script.google.com/macros/s/AKfycbyTu8umstOmPBselZx2DToFmrxgkAlN1MzFZLjucmoaEjVK_h1EmVDVi9KcDYJxVOc/exec";
+    const cancelUploadButton = document.getElementById("cancel-upload");
+    const r2UploadEndpoint = "https://tobykpi-dropbox-uploader.tobyev9.workers.dev";
+    const uploadChunkSize = 50 * 1024 * 1024;
+    const uploadConcurrency = 8;
+    const uploadCanceledMessage = "Upload canceled.";
 
     const unlockDropbox = () => {
       if (dropboxLock) {
@@ -143,12 +136,15 @@
       });
     }
 
-    if (videoInput && videoDropBox && videoUploadList && videoUploadStatus && videoBrowseButton && sendVideosButton && driveUploadStatus && driveUploadForm && driveUploadFrame && driveUploadFilename && driveUploadMimeType && driveUploadData && uploadProgress && uploadProgressFill && uploadProgressLabel) {
+    if (videoInput && videoDropBox && videoUploadList && videoUploadStatus && videoBrowseButton && sendVideosButton && driveUploadStatus && uploadProgress && uploadProgressFill && uploadProgressLabel && cancelUploadButton) {
+      let activeUploadRequests = [];
+      let isUploadCanceled = false;
+
       const setVideoFiles = (files) => {
-        const videosOnly = Array.from(files).filter((file) => file.type.startsWith("video/"));
+        const mediaOnly = Array.from(files).filter((file) => file.type.startsWith("video/") || file.type.startsWith("image/"));
         const transfer = new DataTransfer();
 
-        videosOnly.forEach((file) => transfer.items.add(file));
+        mediaOnly.forEach((file) => transfer.items.add(file));
         videoInput.files = transfer.files;
         updateVideoList();
       };
@@ -157,21 +153,48 @@
         videoUploadList.innerHTML = "";
 
         if (!videoInput.files || videoInput.files.length === 0) {
-          videoUploadStatus.textContent = "No videos selected yet.";
+          videoUploadStatus.textContent = "No files selected yet.";
           sendVideosButton.disabled = true;
           return;
         }
 
-        const label = videoInput.files.length === 1 ? "video selected" : "videos selected";
+        const label = videoInput.files.length === 1 ? "file selected" : "files selected";
         videoUploadStatus.textContent = videoInput.files.length + " " + label;
         sendVideosButton.disabled = false;
 
-        Array.from(videoInput.files).forEach((file) => {
+        Array.from(videoInput.files).forEach((file, index) => {
           const item = document.createElement("div");
+          const fileName = document.createElement("span");
+          const removeButton = document.createElement("button");
+
           item.className = "video-upload-item";
-          item.textContent = file.name;
+          fileName.textContent = file.name;
+          removeButton.type = "button";
+          removeButton.className = "video-upload-remove";
+          removeButton.setAttribute("aria-label", "Remove " + file.name);
+          removeButton.textContent = "x";
+          removeButton.addEventListener("click", (event) => {
+            event.stopPropagation();
+            removeSelectedFile(index);
+          });
+
+          item.appendChild(fileName);
+          item.appendChild(removeButton);
           videoUploadList.appendChild(item);
         });
+      };
+
+      const removeSelectedFile = (removeIndex) => {
+        const transfer = new DataTransfer();
+
+        Array.from(videoInput.files || []).forEach((file, index) => {
+          if (index !== removeIndex) {
+            transfer.items.add(file);
+          }
+        });
+
+        videoInput.files = transfer.files;
+        updateVideoList();
       };
 
       const openFilePicker = () => {
@@ -237,89 +260,227 @@
         }, 900);
       };
 
-      const setOverallProgress = (fileIndex, totalFiles, fileProgress) => {
-        setUploadProgress(((fileIndex + fileProgress) / totalFiles) * 100);
+      const cancelActiveUpload = () => {
+        isUploadCanceled = true;
+        cancelUploadButton.disabled = true;
+        driveUploadStatus.textContent = "Canceling upload...";
+        activeUploadRequests.forEach((request) => request.abort());
       };
 
-      const readFileAsDataUrl = (file, onProgress) => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = () => reject(reader.error);
-        reader.onprogress = (event) => {
-          if (event.lengthComputable) {
-            onProgress(event.loaded / event.total);
+      const requestJson = async (path, options = {}) => {
+        const response = await fetch(r2UploadEndpoint + path, {
+          ...options,
+          headers: {
+            "content-type": "application/json",
+            ...(options.headers || {})
           }
-        };
-        reader.readAsDataURL(file);
-      });
-
-      const uploadOneVideo = async (file, index, total) => {
-        const dataUrl = await readFileAsDataUrl(file, (readProgress) => {
-          setOverallProgress(index, total, readProgress * 0.3);
         });
+        const data = await response.json().catch(() => ({}));
 
-        return new Promise((resolve) => {
-          let animatedProgress = 0.3;
-          let uploadTimer = null;
-
-          driveUploadFrame.onload = () => {
-            if (uploadTimer) {
-              clearInterval(uploadTimer);
-            }
-
-            setOverallProgress(index, total, 1);
-            resolve();
-          };
-
-          driveUploadFilename.value = file.name;
-          driveUploadMimeType.value = file.type || "application/octet-stream";
-          driveUploadData.value = String(dataUrl).split(",")[1] || "";
-          driveUploadStatus.textContent = "Uploading " + (index + 1) + " of " + total + ": " + file.name;
-          setOverallProgress(index, total, animatedProgress);
-
-          uploadTimer = setInterval(() => {
-            animatedProgress = Math.min(animatedProgress + 0.025, 0.95);
-            setOverallProgress(index, total, animatedProgress);
-
-            if (animatedProgress >= 0.95) {
-              driveUploadStatus.textContent = "Finishing upload to Google Drive...";
-            }
-          }, 450);
-
-          driveUploadForm.submit();
-        });
-      };
-
-      sendVideosButton.addEventListener("click", async () => {
-        if (driveUploadEndpoint === "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE") {
-          driveUploadStatus.textContent = "Upload backend is not connected yet. Paste your deployed Apps Script web app URL into upload.html.";
-          return;
+        if (!response.ok || data.ok === false) {
+          throw new Error(data.message || "Upload failed. Please try again.");
         }
 
+        return data;
+      };
+
+      const uploadChunk = (url, chunk, onProgress) => {
+        return new Promise((resolve, reject) => {
+          const request = new XMLHttpRequest();
+          const removeActiveRequest = () => {
+            activeUploadRequests = activeUploadRequests.filter((activeRequest) => activeRequest !== request);
+          };
+
+          activeUploadRequests.push(request);
+
+          request.upload.addEventListener("progress", (event) => {
+            if (!isUploadCanceled && event.lengthComputable) {
+              onProgress(event.loaded);
+            }
+          });
+
+          request.addEventListener("load", () => {
+            removeActiveRequest();
+
+            if (isUploadCanceled) {
+              reject(new Error(uploadCanceledMessage));
+              return;
+            }
+
+            if (request.status >= 200 && request.status < 300) {
+              try {
+                const data = JSON.parse(request.responseText || "{}");
+
+                if (data.ok === false) {
+                  reject(new Error(data.message || "Upload failed. Please try again."));
+                  return;
+                }
+
+                resolve(data.part);
+              } catch (error) {
+                reject(new Error("Upload failed. Please try again."));
+              }
+              return;
+            }
+
+            reject(new Error("Upload failed. Please try again."));
+          });
+
+          request.addEventListener("error", () => {
+            removeActiveRequest();
+            reject(new Error("Upload failed. Please check your connection and try again."));
+          });
+
+          request.addEventListener("abort", () => {
+            removeActiveRequest();
+            reject(new Error(uploadCanceledMessage));
+          });
+
+          request.open("PUT", url);
+          request.setRequestHeader("content-type", "application/octet-stream");
+          request.send(chunk);
+        });
+      };
+
+      const uploadOneFile = async (file, index, total, uploadedBeforeFile, totalBytes) => {
+        let uploadKey = "";
+        let uploadId = "";
+
+        try {
+          driveUploadStatus.textContent = "Uploading " + (index + 1) + " of " + total + ": " + file.name;
+          setUploadProgress((uploadedBeforeFile / totalBytes) * 100);
+
+          const initData = await requestJson("/uploads/init", {
+            method: "POST",
+            body: JSON.stringify({
+              filename: file.name,
+              contentType: file.type || "application/octet-stream",
+              size: file.size
+            })
+          });
+          const partSize = Math.max(initData.partSize || uploadChunkSize, uploadChunkSize);
+          const chunks = [];
+          const parts = [];
+          const loadedByPart = new Map();
+
+          uploadKey = initData.key;
+          uploadId = initData.uploadId;
+
+          for (let start = 0, partNumber = 1; start < file.size; start += partSize, partNumber += 1) {
+            const end = Math.min(start + partSize, file.size);
+            chunks.push({
+              partNumber,
+              chunk: file.slice(start, end)
+            });
+          }
+
+          const updateProgress = () => {
+            const uploadedForFile = Array.from(loadedByPart.values()).reduce((sum, loaded) => sum + loaded, 0);
+            setUploadProgress(((uploadedBeforeFile + uploadedForFile) / totalBytes) * 100);
+          };
+
+          let nextChunkIndex = 0;
+          const uploadNextChunk = async () => {
+            if (isUploadCanceled) {
+              throw new Error(uploadCanceledMessage);
+            }
+
+            const chunkItem = chunks[nextChunkIndex];
+            nextChunkIndex += 1;
+
+            if (!chunkItem) {
+              return;
+            }
+
+            const partUrl = r2UploadEndpoint + "/uploads/part?key=" + encodeURIComponent(uploadKey) + "&uploadId=" + encodeURIComponent(uploadId) + "&partNumber=" + chunkItem.partNumber;
+            const part = await uploadChunk(partUrl, chunkItem.chunk, (chunkLoaded) => {
+              loadedByPart.set(chunkItem.partNumber, chunkLoaded);
+              updateProgress();
+            });
+
+            if (isUploadCanceled) {
+              throw new Error(uploadCanceledMessage);
+            }
+
+            loadedByPart.set(chunkItem.partNumber, chunkItem.chunk.size);
+            parts.push(part);
+            updateProgress();
+            await uploadNextChunk();
+          };
+
+          const workers = Array.from({ length: Math.min(uploadConcurrency, chunks.length) }, () => uploadNextChunk());
+          await Promise.all(workers);
+
+          parts.sort((firstPart, secondPart) => firstPart.partNumber - secondPart.partNumber);
+
+          if (parts.length !== chunks.length) {
+            throw new Error("Upload failed. Please try again.");
+          }
+
+          await requestJson("/uploads/complete", {
+            method: "POST",
+            body: JSON.stringify({
+              key: uploadKey,
+              uploadId,
+              parts
+            })
+          });
+        } catch (error) {
+          activeUploadRequests.forEach((request) => request.abort());
+
+          if (uploadKey && uploadId) {
+            requestJson("/uploads/abort", {
+              method: "POST",
+              body: JSON.stringify({
+                key: uploadKey,
+                uploadId
+              })
+            }).catch(() => {});
+          }
+
+          throw error;
+        }
+      };
+
+      cancelUploadButton.addEventListener("click", cancelActiveUpload);
+
+      sendVideosButton.addEventListener("click", async () => {
         const files = Array.from(videoInput.files || []);
 
         if (files.length === 0) {
-          driveUploadStatus.textContent = "Choose one or more videos to upload.";
+          driveUploadStatus.textContent = "Choose one or more files to upload.";
           return;
         }
 
+        const totalBytes = Math.max(files.reduce((total, file) => total + file.size, 0), 1);
+        let uploadedBeforeFile = 0;
+
         sendVideosButton.disabled = true;
-        driveUploadForm.action = driveUploadEndpoint;
+        videoBrowseButton.disabled = true;
+        cancelUploadButton.hidden = false;
+        cancelUploadButton.disabled = false;
+        activeUploadRequests = [];
+        isUploadCanceled = false;
         uploadProgress.hidden = false;
         setUploadProgress(0);
 
         try {
           for (let index = 0; index < files.length; index += 1) {
-            await uploadOneVideo(files[index], index, files.length);
+            await uploadOneFile(files[index], index, files.length, uploadedBeforeFile, totalBytes);
+            uploadedBeforeFile += files[index].size;
           }
 
-          driveUploadData.value = "";
           setUploadProgress(100);
           driveUploadStatus.textContent = files.length === 1 ? "Upload complete." : "Uploads complete.";
           hideUploadProgress();
         } catch (error) {
-          driveUploadStatus.textContent = "Upload failed. Please try again.";
+          driveUploadStatus.textContent = error.message === uploadCanceledMessage ? uploadCanceledMessage : error.message || "Upload failed. Please try again.";
+          hideUploadProgress();
         } finally {
+          activeUploadRequests = [];
+          cancelUploadButton.hidden = true;
+          cancelUploadButton.disabled = false;
+          videoBrowseButton.disabled = false;
           sendVideosButton.disabled = false;
         }
       });

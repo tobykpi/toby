@@ -2146,6 +2146,10 @@
     }
 
     .video-upload-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       padding: 11px 12px;
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.08);
@@ -2156,6 +2160,35 @@
       font-size: 14px;
       text-align: left;
       word-break: break-word;
+    }
+
+    .video-upload-item span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .video-upload-remove {
+      flex: 0 0 auto;
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.82);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .video-upload-remove:hover {
+      border-color: rgba(201,162,39,0.45);
+      background: rgba(201,162,39,0.14);
+      color: var(--gold);
     }
 
     .drive-upload-button {
@@ -2185,6 +2218,40 @@
       background: linear-gradient(135deg, #ffffff, #e9f8f8);
       color: #0f1013;
       transform: none;
+    }
+
+    .upload-cancel-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-top: 12px;
+      padding: 12px 18px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.82);
+      font: inherit;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .upload-cancel-button:hover {
+      border-color: rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.1);
+      color: #ffffff;
+    }
+
+    .upload-cancel-button:disabled {
+      cursor: wait;
+      opacity: 0.58;
+    }
+
+    .upload-cancel-button[hidden] {
+      display: none;
     }
 
     .drive-upload-status {
@@ -2230,16 +2297,6 @@
       font-weight: 800;
       letter-spacing: 1.6px;
       text-align: center;
-    }
-
-    .drive-upload-form,
-    .drive-upload-frame {
-      position: absolute;
-      left: -9999px;
-      width: 1px;
-      height: 1px;
-      opacity: 0;
-      pointer-events: none;
     }
 
     @keyframes fadeUp {

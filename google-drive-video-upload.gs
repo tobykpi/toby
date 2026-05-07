@@ -7,11 +7,11 @@ function doPost(event) {
     const fileData = event.parameter.fileData;
 
     if (!fileData) {
-      return htmlResponse("Missing file data.");
+      return htmlResponse("Missing file data.", false);
     }
 
-    if (!mimeType.startsWith("video/")) {
-      return htmlResponse("Only video files are accepted.");
+    if (!mimeType.startsWith("video/") && !mimeType.startsWith("image/")) {
+      return htmlResponse("Only video and image files are accepted.", false);
     }
 
     const bytes = Utilities.base64Decode(fileData);
@@ -21,14 +21,26 @@ function doPost(event) {
 
     file.setName(filename);
 
-    return htmlResponse("Uploaded " + filename);
+    return htmlResponse("Uploaded " + filename, true);
   } catch (error) {
-    return htmlResponse("Upload failed: " + error.message);
+    return htmlResponse("Upload failed: " + error.message, false);
   }
 }
 
-function htmlResponse(message) {
-  return HtmlService.createHtmlOutput("<!doctype html><title>Upload</title><p>" + escapeHtml(message) + "</p>");
+function htmlResponse(message, ok) {
+  const payload = JSON.stringify({
+    type: "tobykpi-upload-result",
+    ok: ok,
+    message: message
+  });
+
+  return HtmlService.createHtmlOutput(
+    "<!doctype html><title>Upload</title><script>window.parent.postMessage(" +
+    payload +
+    ", '*');</script><p>" +
+    escapeHtml(message) +
+    "</p>"
+  );
 }
 
 function escapeHtml(value) {
