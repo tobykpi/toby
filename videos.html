@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TobyKPI | Videos</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Montserrat+Alternates:wght@800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .nav-current {
+      color: var(--gold);
+    }
+
+    .video-carousel-shell,
+    .video-carousel-stage {
+      touch-action: pan-y;
+    }
+
+    .video-carousel-stage {
+      cursor: grab;
+    }
+
+    .video-carousel-stage.is-dragging {
+      cursor: grabbing;
+    }
+
+    .video-carousel-stage.is-dragging iframe {
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="brand">TOBYKPI</div>
+    <div class="nav-right">
+      <ul>
+        <li><a href="/">HOME</a></li>
+        <li><a href="/results/">RESULTS</a></li>
+        <li><a href="/videos/" class="nav-current">VIDEOS</a></li>
+        <li><a href="/websites/">WEBSITES</a></li>
+        <li><a href="/music/">MUSIC</a></li>
+        <li><a href="/upload/">UPLOAD HERE</a></li>
+      </ul>
+      <a href="mailto:work@tobykpi.com" class="nav-contact">work@tobykpi.com</a>
+    </div>
+  </nav>
+
+  <div class="content-wrapper">
+    <section class="videos-section" id="videos">
+      <div class="videos-wrap">
+        <div class="videos-header">
+          <h2>Video Edits</h2>
+        </div>
+
+        <div class="featured-video-card">
+          <div class="featured-video-embed">
+            <iframe src="https://www.youtube.com/embed/uuUVuEqJLLM" title="Featured TobyKPI video 02" allowfullscreen></iframe>
+          </div>
+
+            <div class="featured-video-copy">
+              <div class="eyebrow" style="color:#c9a227;">Featured Edit</div>
+            <h3>From rough draft footage to final production.</h3>
+            <p>
+              This featured piece highlights my editing style through pacing, structure, presentation, and the kind of polish I aim for when shaping content into a stronger final result.
+            </p>
+            <p>
+              It reflects the way I approach short-form editing to make content feel cleaner, sharper, and more engaging for the viewer.
+            </p>
+
+            <div class="video-pill-row">
+              <span class="video-pill">Video Editing</span>
+              <span class="video-pill">Before & After</span>
+              <span class="video-pill">Creative Direction</span>
+              <span class="video-pill">Final Production</span>
+            </div>
+
+            <div class="featured-video-actions">
+              <a href="https://www.youtube.com/shorts/uuUVuEqJLLM" target="_blank" rel="noopener noreferrer" class="video-action-btn primary">Watch on YouTube</a>
+              <a href="/websites/" class="video-action-btn secondary">See More Work</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="video-carousel-section">
+          <div class="video-carousel-header">
+            <div class="eyebrow">Edited Shorts</div>
+          </div>
+
+          <div class="video-carousel-shell" data-video-carousel>
+            <button class="video-carousel-btn prev" type="button" aria-label="Previous video" data-carousel-prev>&lsaquo;</button>
+            <button class="video-carousel-btn next" type="button" aria-label="Next video" data-carousel-next>&rsaquo;</button>
+
+            <div class="video-carousel-stage" data-carousel-stage>
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/uuUVuEqJLLM" allowfullscreen title="Edited video project 03"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/8MdU-t9gTV8" allowfullscreen title="Edited video project 04"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/Fs7eAanrRZA" allowfullscreen title="Edited video project 05"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/oPNecKyTlnk" allowfullscreen title="Edited video project 06"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/PsCWtS2l67M" allowfullscreen title="Edited video project 07"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/oI_kAzuzg8c" allowfullscreen title="Edited video project 08"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/LrjiUg7E4SE" allowfullscreen title="Edited video project 09"></iframe>
+              </div>
+
+              <div class="video-card" data-carousel-card>
+                <iframe src="https://www.youtube.com/embed/P2TG4kXV0lU" allowfullscreen title="Edited video project 10"></iframe>
+              </div>
+            </div>
+
+            <div class="video-carousel-dots" data-carousel-dots></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p style="letter-spacing: 3px; font-size: 14px;">TOBYKPI PORTFOLIO</p>
+      <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;">&copy; 2026 TobyKPI. All Rights Reserved.</p>
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      const initStackCarousel = (root, settings) => {
+        if (!root) return;
+
+        const stage = root.querySelector("[data-carousel-stage]");
+        const cards = Array.from(root.querySelectorAll("[data-carousel-card]"));
+        const dotsWrap = root.querySelector("[data-carousel-dots]");
+        const nextBtn = root.querySelector("[data-carousel-next]");
+        const prevBtn = root.querySelector("[data-carousel-prev]");
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        if (!stage || !dotsWrap || cards.length === 0) return;
+
+        let activeIndex = 0;
+        let autoTimer = null;
+        let isInViewport = false;
+        let pointerActive = false;
+        let dragEngaged = false;
+        let dragStartX = 0;
+        let dragStartY = 0;
+
+        const dots = cards.map((_, index) => {
+          const dot = document.createElement("button");
+          dot.type = "button";
+          dot.className = "video-carousel-dot";
+          dot.setAttribute("aria-label", `Go to item ${index + 1}`);
+          dot.addEventListener("click", () => goTo(index, true));
+          dotsWrap.appendChild(dot);
+          return dot;
+        });
+
+        const sync = () => {
+          const stageWidth = stage.clientWidth;
+          const profile = window.innerWidth <= settings.mobileBreakpoint ? settings.mobile : settings.desktop;
+          const cardWidth = Math.min(Math.max(stageWidth * profile.cardWidthFactor, profile.cardWidthMin), profile.cardWidthMax);
+          const nearShift = Math.max(stageWidth * profile.nearShiftFactor, profile.nearShiftMin);
+          const farShift = Math.max(stageWidth * profile.farShiftFactor, profile.farShiftMin);
+
+          cards.forEach((card, index) => {
+            let diff = index - activeIndex;
+
+            if (diff > cards.length / 2) diff -= cards.length;
+            if (diff < -cards.length / 2) diff += cards.length;
+
+            const abs = Math.abs(diff);
+            let x = 0;
+            let y = 0;
+            let scale = 1;
+            let rotate = 0;
+            let opacity = 1;
+            let blur = 0;
+            let saturate = 1;
+
+            if (abs === 1) {
+              x = diff * nearShift;
+              y = profile.nearDrop;
+              scale = profile.nearScale;
+              rotate = diff * profile.nearRotate;
+              opacity = profile.nearOpacity;
+              blur = profile.nearBlur;
+              saturate = profile.nearSaturate;
+            } else if (abs >= 2) {
+              x = diff * farShift;
+              y = profile.farDrop;
+              scale = profile.farScale;
+              rotate = diff * profile.farRotate;
+              opacity = profile.farOpacity;
+              blur = profile.farBlur;
+              saturate = profile.farSaturate;
+            }
+
+            const filterValue = blur > 0.01 || Math.abs(saturate - 1) > 0.01
+              ? `blur(${blur}px) saturate(${saturate})`
+              : "none";
+
+            card.style.width = `${cardWidth}px`;
+            card.style.transform = `translateX(calc(-50% + ${x}px)) translateY(${y}px) translateZ(0) scale(${scale}) rotate(${rotate}deg)`;
+            card.style.opacity = opacity;
+            card.style.zIndex = String(20 - abs);
+            card.style.filter = filterValue;
+            card.style.pointerEvents = abs === 0 ? "auto" : "none";
+            card.dataset.state = abs === 0 ? "active" : abs === 1 ? "near" : "far";
+            card.setAttribute("aria-hidden", abs === 0 ? "false" : "true");
+          });
+
+          dots.forEach((dot, index) => {
+            const isActive = index === activeIndex;
+            dot.classList.toggle("active", isActive);
+            dot.setAttribute("aria-pressed", isActive ? "true" : "false");
+          });
+        };
+
+        const stop = () => {
+          if (autoTimer) {
+            window.clearInterval(autoTimer);
+            autoTimer = null;
+          }
+        };
+
+        const start = () => {
+          stop();
+          if (reducedMotion.matches || !isInViewport) return;
+          autoTimer = window.setInterval(() => goTo(activeIndex + 1), settings.interval);
+        };
+
+        const restart = () => {
+          start();
+        };
+
+        const goTo = (index, userInitiated = false) => {
+          activeIndex = (index + cards.length) % cards.length;
+          sync();
+          if (userInitiated) restart();
+        };
+
+        const resetDrag = () => {
+          pointerActive = false;
+          dragEngaged = false;
+          stage.classList.remove("is-dragging");
+        };
+
+        const handlePointerDown = (event) => {
+          if (event.pointerType === "mouse" && event.button !== 0) return;
+
+          pointerActive = true;
+          dragEngaged = false;
+          dragStartX = event.clientX;
+          dragStartY = event.clientY;
+          stop();
+
+          if (typeof stage.setPointerCapture === "function") {
+            try {
+              stage.setPointerCapture(event.pointerId);
+            } catch {}
+          }
+        };
+
+        const handlePointerMove = (event) => {
+          if (!pointerActive) return;
+
+          const deltaX = event.clientX - dragStartX;
+          const deltaY = event.clientY - dragStartY;
+
+          if (!dragEngaged) {
+            if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 14) {
+              resetDrag();
+              start();
+              return;
+            }
+
+            if (Math.abs(deltaX) < 18) return;
+
+            dragEngaged = true;
+            stage.classList.add("is-dragging");
+          }
+
+          if (dragEngaged && event.cancelable) {
+            event.preventDefault();
+          }
+        };
+
+        const handlePointerUp = (event) => {
+          if (!pointerActive) return;
+
+          const deltaX = event.clientX - dragStartX;
+          const deltaY = event.clientY - dragStartY;
+          const shouldSwipe = dragEngaged && Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 55;
+
+          resetDrag();
+
+          if (shouldSwipe) {
+            goTo(activeIndex + (deltaX < 0 ? 1 : -1), true);
+            return;
+          }
+
+          start();
+        };
+
+        nextBtn?.addEventListener("click", () => goTo(activeIndex + 1, true));
+        prevBtn?.addEventListener("click", () => goTo(activeIndex - 1, true));
+        stage.addEventListener("pointerdown", handlePointerDown);
+        stage.addEventListener("pointermove", handlePointerMove, { passive: false });
+        window.addEventListener("pointerup", handlePointerUp);
+        window.addEventListener("pointercancel", resetDrag);
+
+        root.addEventListener("mouseenter", stop);
+        root.addEventListener("mouseleave", start);
+        root.addEventListener("focusin", stop);
+        root.addEventListener("focusout", start);
+        window.addEventListener("resize", sync);
+        document.addEventListener("visibilitychange", () => {
+          if (document.hidden) {
+            stop();
+          } else {
+            start();
+          }
+        });
+
+        if ("IntersectionObserver" in window) {
+          const observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            if (!entry) return;
+
+            isInViewport = entry.isIntersecting;
+
+            if (isInViewport) {
+              activeIndex = 0;
+              sync();
+              start();
+            } else {
+              stop();
+            }
+          }, {
+            threshold: settings.threshold
+          });
+
+          observer.observe(root);
+        } else {
+          isInViewport = true;
+        }
+
+        const handleMotionChange = () => {
+          sync();
+          start();
+        };
+
+        if (typeof reducedMotion.addEventListener === "function") {
+          reducedMotion.addEventListener("change", handleMotionChange);
+        }
+
+        sync();
+        start();
+      };
+
+      initStackCarousel(document.querySelector("[data-video-carousel]"), {
+        interval: 4200,
+        threshold: 0.45,
+        mobileBreakpoint: 900,
+        desktop: {
+          cardWidthFactor: 0.34,
+          cardWidthMin: 270,
+          cardWidthMax: 360,
+          nearShiftFactor: 0.24,
+          nearShiftMin: 170,
+          farShiftFactor: 0.42,
+          farShiftMin: 320,
+          nearDrop: 32,
+          farDrop: 76,
+          nearScale: 0.92,
+          farScale: 0.82,
+          nearRotate: 5,
+          farRotate: 8,
+          nearOpacity: 0.76,
+          farOpacity: 0.38,
+          nearBlur: 0,
+          farBlur: 0,
+          nearSaturate: 1,
+          farSaturate: 1
+        },
+        mobile: {
+          cardWidthFactor: 0.62,
+          cardWidthMin: 270,
+          cardWidthMax: 360,
+          nearShiftFactor: 0.26,
+          nearShiftMin: 150,
+          farShiftFactor: 0.44,
+          farShiftMin: 250,
+          nearDrop: 36,
+          farDrop: 82,
+          nearScale: 0.92,
+          farScale: 0.82,
+          nearRotate: 5,
+          farRotate: 8,
+          nearOpacity: 0.76,
+          farOpacity: 0.38,
+          nearBlur: 0,
+          farBlur: 0,
+          nearSaturate: 1,
+          farSaturate: 1
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
