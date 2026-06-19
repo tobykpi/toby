@@ -14,6 +14,20 @@
       color: var(--gold);
     }
   </style>
+  <script>
+    (() => {
+      const platform = navigator.platform || "";
+      const userAgent = navigator.userAgent || "";
+
+      if (/Mac/.test(platform) || /Macintosh/.test(userAgent)) {
+        document.documentElement.classList.add("mac-performance");
+      }
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("reduce-motion");
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -83,7 +97,7 @@
   </footer>
 
   <script>
-    const allowedDropboxPasswords = ["hermes", "doobin"];
+    const allowedDropboxPasswords = ["breen.logan", "Logan"];
     const dropboxGate = document.getElementById("dropbox-gate");
     const dropboxLock = document.getElementById("dropbox-lock");
     const dropboxPassword = document.getElementById("dropbox-password");
