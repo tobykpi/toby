@@ -10,6 +10,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Montserrat+Alternates:wght@800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <style>
+    .website-carousel-stage .website-preview-shell {
+      height: auto;
+      aspect-ratio: 1000 / 570;
+    }
+
+    .website-preview-shell img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
     .nav-current {
       color: var(--gold);
     }
@@ -20,6 +32,7 @@
     }
 
     .website-carousel-stage {
+      height: 380px;
       cursor: grab;
     }
 
@@ -27,7 +40,6 @@
       cursor: grabbing;
     }
 
-    .website-carousel-stage.is-dragging iframe,
     .website-carousel-stage.is-dragging .website-card-link {
       pointer-events: none;
     }
@@ -73,7 +85,7 @@
                     <div class="website-browser-url">fearapparel.shop</div>
                   </div>
                   <div class="website-preview-shell">
-                    <iframe src="https://fearapparel.shop" title="Fear Apparel live website preview" loading="lazy" scrolling="no"></iframe>
+                    <img src="fearapparel-landing.jpg" alt="Fear Apparel landing page" width="1000" height="570" loading="eager" decoding="async" draggable="false">
                   </div>
                   <div class="website-card-meta">
                     <div class="website-card-copy">
@@ -97,7 +109,7 @@
                     <div class="website-browser-url">drjoeevans.com</div>
                   </div>
                   <div class="website-preview-shell">
-                    <iframe src="https://drjoeevans.com" title="Dr. Joe Evans live website preview" loading="lazy" scrolling="no"></iframe>
+                    <img src="drjoeevans-landing.jpg" alt="Dr. Joe Evans landing page" width="1000" height="570" loading="lazy" decoding="async" draggable="false">
                   </div>
                   <div class="website-card-meta">
                     <div class="website-card-copy">
@@ -121,7 +133,7 @@
                     <div class="website-browser-url">quickliftmoving.us</div>
                   </div>
                   <div class="website-preview-shell">
-                    <iframe src="https://quickliftmoving.us" title="Quick Lift Moving live website preview" loading="lazy" scrolling="no"></iframe>
+                    <img src="quickliftmoving-landing.jpg" alt="Quick Lift Moving landing page" width="1000" height="570" loading="lazy" decoding="async" draggable="false">
                   </div>
                   <div class="website-card-meta">
                     <div class="website-card-copy">
@@ -145,7 +157,7 @@
                     <div class="website-browser-url">breathoflife.world</div>
                   </div>
                   <div class="website-preview-shell">
-                    <iframe src="https://breathoflife.world" title="Breath of Life Ministries live website preview" loading="lazy" scrolling="no"></iframe>
+                    <img src="breathoflife-landing.jpg" alt="Breath of Life Ministries landing page" width="1000" height="570" loading="lazy" decoding="async" draggable="false">
                   </div>
                   <div class="website-card-meta">
                     <div class="website-card-copy">
@@ -156,6 +168,30 @@
                   </div>
                 </div>
                 <a href="https://breathoflife.world" target="_blank" rel="noopener noreferrer" class="website-card-link" aria-label="Visit Breath of Life Ministries website"></a>
+              </div>
+
+              <div class="website-card" data-carousel-card>
+                <div class="website-card-shell">
+                  <div class="website-browser-bar">
+                    <div class="website-browser-dots">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <div class="website-browser-url">mjusanationals.com</div>
+                  </div>
+                  <div class="website-preview-shell">
+                    <img src="mjusanationals-landing.jpg" alt="Miss Juneteenth USA landing page" width="1000" height="570" loading="lazy" decoding="async" draggable="false">
+                  </div>
+                  <div class="website-card-meta">
+                    <div class="website-card-copy">
+                      <h3>Miss Juneteenth USA</h3>
+                      <p>A national scholarship pageant website showcasing the mission, program, contestants, and community of Miss Juneteenth USA with an elegant, welcoming design.</p>
+                    </div>
+                    <div class="website-card-cta">Visit Website</div>
+                  </div>
+                </div>
+                <a href="https://mjusanationals.com" target="_blank" rel="noopener noreferrer" class="website-card-link" aria-label="Visit Miss Juneteenth USA website"></a>
               </div>
             </div>
 
@@ -258,6 +294,8 @@
             card.dataset.state = abs === 0 ? "active" : abs === 1 ? "near" : "far";
             card.setAttribute("aria-hidden", abs === 0 ? "false" : "true");
           });
+
+          stage.style.height = `${Math.ceil(Math.max(...cards.map((card) => card.offsetHeight)) + profile.farDrop + 24)}px`;
 
           dots.forEach((dot, index) => {
             const isActive = index === activeIndex;
