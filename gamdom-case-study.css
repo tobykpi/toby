@@ -1,0 +1,20 @@
+/* Public X post case study. Keep the source link usable without the embed. */
+.gamdom-case-study > * { min-width: 0; }
+.gamdom-post { position: relative; z-index: 1; width: 100%; max-width: 550px; margin: 0 auto; }
+.gamdom-post blockquote { margin: 0; padding: 24px; color: #fff; line-height: 1.7; }
+.gamdom-post a { color: #e5c662; text-decoration: underline; }
+.gamdom-post .twitter-tweet { margin: 0 auto !important; }
+.gamdom-metrics { margin: 26px 0 16px; padding: 24px; border: 1px solid rgba(201,162,39,.4); border-radius: 18px; background: rgba(201,162,39,.08); }
+.gamdom-metrics dt { color: rgba(255,255,255,.76); font-size: 14px; }
+.gamdom-metrics dd { margin: 8px 0 0; font-size: clamp(40px, 6vw, 64px); font-weight: 800; line-height: 1; color: #e5c662; }
+.featured-video-copy .gamdom-metric-note { font-size: 12px; line-height: 1.7; }
+@media (max-width: 900px) {
+  .gamdom-case-study { grid-template-columns: minmax(0, 1fr); padding: 20px; }
+}.gamdom-case-study { scroll-margin-top: 110px; }
+.gamdom-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; padding: 20px; }
+.gamdom-metrics dd { font-size: clamp(28px, 3.3vw, 44px); }
+@media (max-width: 400px) {
+  .gamdom-metrics { gap: 10px; padding: 14px; }
+  .gamdom-metrics dt { font-size: 12px; }
+  .gamdom-metrics dd { font-size: 26px; }
+}

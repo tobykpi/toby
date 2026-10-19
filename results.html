@@ -7,11 +7,13 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Montserrat+Alternates:wght@800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="gamdom-case-study.css">
   <style>
     .nav-current {
       color: var(--gold);
     }
   </style>
+  <script defer src="gamdom-metrics.js"></script>
 </head>
 
 <body>
@@ -54,42 +56,32 @@
         <a class="project-button" href="https://instagram.com/cuhvo" target="_blank" rel="noopener noreferrer">View Page</a>
       </div>
 
-      <div class="proof-grid">
-        <div class="proof-card proof-card-main">
-          <div class="proof-card-header">
-            <h3>Most important performance proof</h3>
-            <p>
-              This screenshot shows the biggest headline metric from the page: total views, non-follower discovery, and accounts reached. It gives immediate proof of large-scale exposure and growth beyond the existing audience.
-            </p>
+        <article class="featured-video-card gamdom-case-study" id="gamdom-edit" aria-labelledby="gamdom-edit-title">
+          <div class="gamdom-post">
+            <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true" data-conversation="none">
+              <p lang="tr">TERTEMİZ 😎 @mockerbey</p>
+              <a href="https://x.com/GamdomTopluluk/status/2088979699053543474">Watch the Gamdom TR video edit on X</a>
+            </blockquote>
           </div>
-          <div class="proof-image-wrap">
-            <img src="TobyKPI stats 5.jpg" alt="Instagram views and accounts reached screenshot">
-          </div>
-        </div>
-
-        <div class="proof-stack">
-          <div class="proof-card proof-card-secondary">
-            <div class="proof-card-header">
-              <h3>Interaction growth</h3>
-              <p>Massive interaction volume generated from reels-driven content.</p>
+          <div class="featured-video-copy">
+            <div class="eyebrow" style="color:#c9a227;">Video Edit · Published on X</div>
+            <h3 id="gamdom-edit-title">Gamdom TR / Mocker</h3>
+            <p>A short-form video I edited, published by @GamdomTopluluk and featuring @mockerbey.</p>
+            <dl class="gamdom-metrics" aria-label="Public post performance">
+              <div><dt>Post views</dt><dd data-metric="views">55.1K</dd></div>
+              <div><dt>Likes</dt><dd data-metric="likes">479</dd></div>
+              <div><dt>Replies</dt><dd data-metric="replies">432</dd></div>
+            </dl>
+            <p class="gamdom-metric-note" data-metrics-status role="status">Public counts shown on X as of <time datetime="2026-10-19">October 19, 2026</time>. Views rounded by X; counts may change.</p>
+            <div class="video-pill-row">
+              <span class="video-pill">Video Editing</span>
+              <span class="video-pill">Short-form Content</span>
             </div>
-            <div class="proof-image-wrap">
-              <img src="TobyKPI stats 1.jpg" alt="Instagram interactions screenshot">
-            </div>
-          </div>
-
-          <div class="proof-card proof-card-tertiary">
-            <div class="proof-card-header">
-              <h3>Top content proof</h3>
-              <p>Top-performing reels showing multi-million view content outputs.</p>
-            </div>
-            <div class="proof-image-wrap">
-              <img src="TobyKPI stats 4.jpg" alt="Instagram top content screenshot">
+            <div class="featured-video-actions">
+              <a href="https://x.com/GamdomTopluluk/status/2088979699053543474" target="_blank" rel="noopener noreferrer" class="video-action-btn primary">Watch on X</a>
             </div>
           </div>
-        </div>
-      </div>
-
+        </article>
     </div>
   </section>
 
@@ -98,5 +90,6 @@
     <p style="margin-top: 20px; font-size: 12px; opacity: 0.7;">&copy; 2026 TobyKPI. All Rights Reserved.</p>
   </footer>
 
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
 </html>
